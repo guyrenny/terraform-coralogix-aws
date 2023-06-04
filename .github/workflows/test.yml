@@ -24,4 +24,5 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan --var-file=vars.tfvars ${ { steps.changed-files.outputs.files } }
+        run: terraform plan --var-file=vars.tfvars ${{ steps.changed-files.outputs.files }}
+
