@@ -22,6 +22,7 @@ jobs:
         with:
           terraform_version: '1.3.*'
           terraform_wrapper: false
+      - run: go mod init
       - run: go test
         env:
           TF_ACC: '1'
