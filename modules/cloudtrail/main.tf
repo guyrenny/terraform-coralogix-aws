@@ -3,7 +3,7 @@ data "aws_caller_identity" "this" {}
 module "cloudtrail" {
   source = "coralogix/aws/coralogix//modules/s3"
 
-  coralogix_region   = var.coralogix_region
+  coralogix_region    = var.coralogix_region
   custom_url         = var.custom_url
   private_key        = var.private_key
   ssm_enable         = var.ssm_enable
