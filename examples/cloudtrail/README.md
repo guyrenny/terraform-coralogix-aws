@@ -14,7 +14,7 @@ module "cloudtrail" {
   source = "coralogix/aws/coralogix//modules/cloudtrail"
 
   coralogix_region   = "Europe"
-  private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX"
+  private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXX"
   ssm_enable         = "false"
   layer_arn          = "<your layer arn>"
   application_name   = "cloudtrail"
