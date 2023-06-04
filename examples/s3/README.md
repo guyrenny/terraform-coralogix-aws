@@ -14,7 +14,7 @@ module "s3" {
   source = "coralogix/aws/coralogix//modules/s3"
 
   coralogix_region   = "Europe"
-  private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX"
+  private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXX"
   ssm_enable         = "false"
   layer_arn          = "<your layer arn>"
   application_name   = "s3"
