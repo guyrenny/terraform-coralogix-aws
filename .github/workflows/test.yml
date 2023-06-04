@@ -3,7 +3,7 @@ name: Terraform Testing
 on:
   push:
     branches:
-      - main
+      - master
     paths: 
       - "modules/**"
 
