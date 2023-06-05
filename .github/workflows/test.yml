@@ -36,14 +36,14 @@ jobs:
         with:
           path: ${{ env.action_state }}/
           
-      - name: Terraform validate
-        run: terraform validate
-        working-directory: ${{ env.action_state }}/
-        
       - name: Terraform Init
         run: terraform init
         working-directory: ${{ env.action_state }}/
-
+          
+      - name: Terraform validate
+        run: terraform validate
+        working-directory: ${{ env.action_state }}/
+      
       - name: Terraform Plan
         run: terraform plan
         working-directory: ${{ env.action_state }}/
