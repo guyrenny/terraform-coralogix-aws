@@ -3,7 +3,7 @@ name: Terraform Testing
 on:
   push:
     branches:
-      - master
+      - main
     paths: 
       - "modules/**"
 
@@ -23,22 +23,32 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           ignore: "**/+(.github)"
-          foldersOnly: true 
+          foldersOnly: false 
           format: csv
           
-      - name: Echo
-        run: echo ${{ steps.get_changed.outputs.changed }}
+      - name: Set the value
+        id: step_one
+        run: |
+          echo "action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | sed 's|^\(modules/[^/]*\).*|\1|')" >> $GITHUB_ENV
+      
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.action_state }}"
+          
+      - name: Echo changed files
+        run: echo ${{ steps.get_changed.outputs.changed }} | sed 's|^\(modules/[^/]*\).*|\1|'
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
-          path: ${{ steps.get_changed.outputs.changed }}/
+          path: ${{ env.action_state }}/
         
       - name: Terraform Init
         run: terraform init
-        working-directory: ${{ steps.get_changed.outputs.changed }}/
+        working-directory: ${{ env.action_state }}/
 
       - name: Terraform Plan
         run: terraform plan
-        working-directory: ${{ steps.get_changed.outputs.changed }}/
+        working-directory: ${{ env.action_state }}/
         
