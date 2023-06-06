@@ -37,7 +37,10 @@ jobs:
           path: ${{ env.action_state }}/
           
       - name: Terraform Init
-        run: terraform init
+        run: |
+          terraform init ;
+          terraform validate ;
+          terraform plan
         working-directory: tests/
           
       - name: Terraform validate
