@@ -38,13 +38,13 @@ jobs:
           
       - name: Terraform Init
         run: terraform init
-        working-directory: ${{ env.action_state }}/
+        working-directory: tests/s3.tfvars
           
       - name: Terraform validate
         run: terraform validate
         working-directory: ${{ env.action_state }}/
       
       - name: Terraform Plan
-        run: terraform plan -var-file=../../tests/s3.tfvars
-        working-directory: ${{ env.action_state }}/
+        run: terraform plan
+        working-directory: tests/s3.tfvars
         
