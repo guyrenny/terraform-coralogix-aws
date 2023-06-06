@@ -42,7 +42,7 @@ jobs:
           
       - name: Terraform validate
         run: terraform validate
-        working-directory: ${{ env.action_state }}/
+        working-directory: tests/
       
       - name: Terraform Plan
         run: terraform plan
