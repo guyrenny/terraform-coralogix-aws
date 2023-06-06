@@ -45,6 +45,6 @@ jobs:
         working-directory: ${{ env.action_state }}/
       
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var-file=../../tests/s3.tfvars
         working-directory: ${{ env.action_state }}/
         
