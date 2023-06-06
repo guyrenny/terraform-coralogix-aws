@@ -1,6 +1,11 @@
-s3_bucket_name = "the-example-bucket-1"
-application_name ="app"
-layer_arn = ""
-private_key = "XXXXX-xxxx-xxx-xxxx"
-ssm_enable = "false"
-subsystem_name = "sub"
+module "s3" {
+  source = "../modules/s3"
+
+  coralogix_region   = "Europe"
+  private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXX"
+  ssm_enable         = "false"
+  layer_arn          = "<your layer arn>"
+  application_name   = "s3"
+  subsystem_name     = "logs"
+  s3_bucket_name     = "the-example-bucket-1"
+}
