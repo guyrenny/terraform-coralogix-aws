@@ -1,0 +1,6 @@
+s3_bucket_name = "the-example-bucket-1"
+application_name ="app"
+layer_arn = ""
+private_key = "XXXXX-xxxx-xxx-xxxx"
+ssm_enable = "false"
+subsystem_name = "sub"
