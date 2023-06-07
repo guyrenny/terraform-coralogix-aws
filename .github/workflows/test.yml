@@ -41,6 +41,8 @@ jobs:
           export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | sed 's|^\(modules/[^/]*\).*|\1|')
           echo "::set-output name=action_state::$action_state"
         
+      - name: echo
+        run: echo ${{ env.action_state }}
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
