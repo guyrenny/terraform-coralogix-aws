@@ -8,7 +8,7 @@ locals {
     US        = "ingress.coralogix.us"
     Custom       = var.custom_url
   }
-  coralogix_url_seffix = "/api/v1/logs"
+  coralogix_url_seffix = "/api/v1/logs" 
   tags = {
     Provider = "Coralogix"
     License  = "Apache-2.0"
