@@ -25,18 +25,6 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
-          
-
-      - name: Get Changed Packages
-        id: get-changed-packages
-        run: |
-          export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} | xargs -n1 dirname | xargs -n1 basename | sort | uniq)
-          echo "::set-output name=packages::$PACKAGES"
-
-      - name: Show Changed Files
-        run: |
-          echo "Changed files:"
-          echo "${{ steps.get-changed-packages.outputs.changed-files }}"
 
           
       - uses: Stockopedia/action-get-changed-files@v1
@@ -50,7 +38,8 @@ jobs:
       - name: Set the value
         id: step_one
         run: |
-          echo "action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | sed 's|^\(modules/[^/]*\).*|\1|')" >> $GITHUB_ENV
+          export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | sed 's|^\(modules/[^/]*\).*|\1|')
+          echo "::set-output name=action_state::$action_state"
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
