@@ -30,7 +30,7 @@ jobs:
       - name: Get Changed Packages
         id: get-changed-packages
         run: |
-          export PACKAGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^terraform/modules/' | awk -F/ '{ print $2 }' | head -n 1) | jq -rcnR '[inputs]')
+          export PACKAGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^terraform/modules/' | awk -F/ '{ print $2 }' | head -n 1) | jq -rcnR '[inputs]'
           echo "::set-output name=packages::$PACKAGES"
           echo ${{ needs.check.outputs.packages }}
       - name: Show Changed Files
