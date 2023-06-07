@@ -32,7 +32,7 @@ jobs:
         run: |
           export PACKAGES=$(git diff --name-only --diff-filter=d | xargs -n1 dirname | sed -r 's/src\/([^\/]+).*$/src\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
           echo "::set-output name=packages::$PACKAGES"
-          echo $PACKAGES
+          echo ${{ fromJSON(needs.check.outputs.packages) }}
           
       - uses: Stockopedia/action-get-changed-files@v1
         id: get_changed
