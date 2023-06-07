@@ -26,7 +26,7 @@ resource "random_string" "this" {
   special = false
 }
 
-module "lambda" {
+module "lambda1" {
   create                 = var.ssm_enable != "True" ? true : false
   source                 = "terraform-aws-modules/lambda/aws"
   version                = "3.2.1"
