@@ -11,7 +11,7 @@ locals {
   coralogix_url_seffix = "/api/v1/logs" 
   tags = {
     Provider = "Coralogix" 
-    License  = "Apache-2.0"
+    License  = "Apache-2.0" 
   } 
 }  
   
