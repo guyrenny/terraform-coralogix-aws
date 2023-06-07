@@ -26,13 +26,13 @@ jobs:
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
           
-          
+
       - name: Get Changed Packages
         id: get-changed-packages
         run: |
-          export PACKAGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^terraform/modules/' | awk -F/ '{ print $2 }' | head -n 1)
+          export PACKAGES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | awk -F/ '{ print $2 }' | head -n 1)
           echo "::set-output name=packages::$PACKAGES"
-          echo ${{ needs.check.outputs.packages }}
+
       - name: Show Changed Files
         run: |
           echo "Changed files:"
