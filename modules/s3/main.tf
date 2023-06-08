@@ -5,7 +5,7 @@ locals {
     Europe2   =  "ingress.eu2.coralogix.com" 
     India     = "ingress.coralogix.in"      
     Singapore = "ingress.coralogixsg.com"   
-    US        = "ingress.coralogix.us"   
+    US        = "ingress.coralogix.us"    
     Custom       = var.custom_url      
     name      =     1234 
   }     
