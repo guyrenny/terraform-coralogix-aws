@@ -41,15 +41,19 @@ jobs:
           echo "action_state=${array[*]}" >> $GITHUB_ENV
           
       - name: test eacho
+        id: array
         run: echo ${{env.action_state}}
           
 
   validate:
       runs-on: ubuntu-latest
-
+      strategy:
+        fail-fast: false
+        matrix:
+          package: ${{ needs.test.outputs.array }}
       steps:
       - name: test eacho
-        run: echo ${{test.env.action_state}}
+        run: echo ${{needs.test.outputs.array}}
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
