@@ -47,11 +47,11 @@ jobs:
           echo "::set-output name=action_state::$action_state"
           
       - name: echo1
-        run: echo ${{ env.action_state }}
+        run: echo${{ steps.step_one.outputs.action_state }}
         
       - name: echo
         run: |
-          IFS=',' read -ra modules <<< "$(echo ${{ env.action_state }} | awk -F'/' '{print $2}')"
+          IFS=',' read -ra modules <<< "$(echo ${{ steps.step_one.outputs.action_state }} | awk -F'/' '{print $2}')"
           for module in "${modules[@]}"; do
             echo "$module"
           done
