@@ -57,7 +57,7 @@ jobs:
           
       - name: Terraform validate
         run: terraform validate
-        working-directory: tests/
+        working-directory: modules/${{ steps.step_one.outputs.action_state }}
       
       - name: Terraform Plan
         run:  |
