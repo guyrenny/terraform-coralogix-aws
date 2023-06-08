@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 module "eventbridge" {
-  source = "../modules/eventbridge"
+  source = "../../modules/eventbridge"
 
   eventbridge_stream             = "eventbridge_stream_test"
   sources                        = ["aws.autoscaling"]
