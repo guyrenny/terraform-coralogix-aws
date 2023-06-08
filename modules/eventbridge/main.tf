@@ -14,7 +14,7 @@ locals {
     } 
     "singapore" = {
       url = "https://aws-events.coralogixsg.com/aws/event"    
-    }
+    } 
     "ireland" = { 
       url = "https://aws-events.coralogix.com/aws/event" 
     } 
