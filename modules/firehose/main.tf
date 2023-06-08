@@ -15,7 +15,7 @@ locals {
     "singapore" = {
       url = "https://firehose-ingress.coralogixsg.com/firehose" 
     }
-    "ireland" = {
+    "ireland" = { 
       url = "https://firehose-ingress.coralogix.com/firehose"
     }
     "india" = {
