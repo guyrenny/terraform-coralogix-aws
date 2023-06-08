@@ -42,7 +42,8 @@ jobs:
           echo "::set-output name=action_state::$action_state"
         
       - name: echo
-        run: echo ${{ env.action_state }}
+        run: echo ${{ steps.step_one.outputs.action_state }}
+        
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
