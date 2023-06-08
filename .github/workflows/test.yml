@@ -43,6 +43,8 @@ jobs:
       - name: test eacho
         id: array
         run: echo ${{env.action_state}}
+    outputs: 
+      array: ${{env.action_state}}
           
 
   validate:
