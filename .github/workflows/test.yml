@@ -36,18 +36,6 @@ jobs:
           format: csv
           
           
-      - name: Get Changed Packages
-        id: get-changed-packages
-        run: |
-          export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} modules/ | xargs -n1 dirname | sed -r 's/modules\/([^\/]+).*$/modules\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
-          echo "::set-output name=packages::$PACKAGES"
-          echo $PACKAGES
-          
-      - name: Set the value
-        id: step_two
-        run: |
-          echo "${{ steps.get-changed-packages.outputs.packages }}"
-          
       - name: Set the value
         id: step_one
         run: |
@@ -55,7 +43,10 @@ jobs:
           echo "::set-output name=action_state::$action_state"
         
       - name: echo
-        run: echo ${{ steps.step_one.outputs.action_state }}
+        run: |
+          IFS= ',' read -ra modules <<< "$(echo "$string" | awk -F',' '{for(i=1; i<=NF; i++) print $i}')"
+          echo modules[0]
+          echo ${{ steps.step_one.outputs.action_state }}
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
