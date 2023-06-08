@@ -37,7 +37,8 @@ jobs:
       - name: get the values
         id: get
         run: |
-          echo "action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | sed 's|^\(modules/[^/]*\).*|\1|')" >> $GITHUB_ENV
+          IFS=', ' read -r -a array <<< ${{ steps.get_changed.outputs.changed }}
+          echo "action_state=$array" >> $GITHUB_ENV
           
       - name: test eacho
         run: echo ${{env.action_state}}
