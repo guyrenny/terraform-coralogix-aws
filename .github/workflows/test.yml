@@ -10,7 +10,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ steps.echo.outputs.array }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -55,13 +58,7 @@ jobs:
           echo "::set-output name=array::$array
           echo "${array[]}"
 
-  validate: 
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        package: ${{ steps.echo.outputs.array }}
-    steps:
+
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
