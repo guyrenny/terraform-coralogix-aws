@@ -8,7 +8,7 @@ terraform {
 }
 
 locals { 
-  endpoint_url = { 
+  endpoint_url = {  
     "us" = { 
       url = "https://aws-events.coralogix.us/aws/event" 
     } 
