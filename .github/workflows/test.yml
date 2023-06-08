@@ -38,7 +38,7 @@ jobs:
       - name: Set the value
         id: step_one
         run: |
-          export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | sed 's|^\(modules/[^/]*\).*|\1|')
+          export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" | grep -oP 'modules/(\K[^/]+)')
           echo "::set-output name=action_state::$action_state"
         
       - name: echo
