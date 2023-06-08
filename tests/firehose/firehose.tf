@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 module "firehose" {
-  source = "../modules/firehose"
+  source = "../../modules/firehose"
 
   coralogix_region   = "Europe"
   private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXX"
