@@ -49,7 +49,9 @@ jobs:
           echo "test=$package" >> $GITHUB_OUTPUT
         
       - name: split the changes file into array
-        run: echo ${{env.test}}
+        run: |
+          echo ${{env.test}}
+          echo $package
 
   validate: 
     runs-on: ubuntu-latest
