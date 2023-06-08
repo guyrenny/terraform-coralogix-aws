@@ -53,7 +53,7 @@ jobs:
         run: |
           pwd ; ls ;
           terraform init
-        working-directory: tests/
+        working-directory: tests/${{ steps.step_one.outputs.action_state }}
           
       - name: Terraform validate
         run: terraform validate
@@ -62,5 +62,5 @@ jobs:
       - name: Terraform Plan
         run:  |
           pwd ; ls ; terraform plan
-        working-directory: tests/
+        working-directory: tests/${{ steps.step_one.outputs.action_state }}
         
