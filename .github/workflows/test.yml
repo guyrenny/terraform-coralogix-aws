@@ -56,11 +56,18 @@ jobs:
             echo "$array"
           done
           echo ${array[1]}
-        
+
+  validate: 
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON${{ steps.step_one.outputs.action_state }} }}
+    steps:
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
-          path: ${{ env.action_state }}/
+          path: ${{ matrix.package }}/
           
       - name: Terraform Init
         run: terraform init
