@@ -52,9 +52,7 @@ jobs:
         run: |
           IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
           echo "::set-output name=array::$array"
-          echo ${array[*]}
-          echo "changes=${array[1]}" >> $GITHUB_OUTPUT
-          echo ${{ steps.step_one.outputs.changes }}
+          echo "changes=${array[0]}" >> $GITHUB_OUTPUT
           
 
   validate:
