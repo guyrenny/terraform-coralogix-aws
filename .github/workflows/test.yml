@@ -52,7 +52,9 @@ jobs:
       - name: echo
         run: |
           IFS=',' read -ra modules <<< "$(echo ${{ env.action_state }} | awk -F'/' '{print $2}')"
-          echo modules[0]
+          for module in "${modules[@]}"; do
+            echo "$module"
+          done
           echo ${{ steps.step_one.outputs.action_state }}
         
       - name: terraform fmt
