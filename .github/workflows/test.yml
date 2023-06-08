@@ -50,17 +50,14 @@ jobs:
           path: ${{ env.action_state }}/
           
       - name: Terraform Init
-        run: |
-          pwd ; ls ;
-          terraform init
+        run: terraform init
         working-directory: tests/${{ steps.step_one.outputs.action_state }}
           
       - name: Terraform validate
         run: terraform validate
-        working-directory: modules/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ steps.step_one.outputs.action_state }}
       
       - name: Terraform Plan
-        run:  |
-          pwd ; ls ; terraform plan
+        run:  terraform plan
         working-directory: tests/${{ steps.step_one.outputs.action_state }}
         
