@@ -51,7 +51,7 @@ jobs:
         
       - name: echo
         run: |
-          IFS= ',' read -ra modules <<< "$(echo ${{ env.action_state }} | awk -F',' '{for(i=1; i<=NF; i++) print $i}')"
+          IFS=',' read -ra modules <<< "$(echo ${{ env.action_state }} | awk -F'/' '{print $2}')"
           echo modules[0]
           echo ${{ steps.step_one.outputs.action_state }}
         
