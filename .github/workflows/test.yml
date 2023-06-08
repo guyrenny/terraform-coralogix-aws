@@ -52,7 +52,7 @@ jobs:
       - name: echo
         run: |
           IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
-          echo "${array}"
+          echo "${array[1]}"
 
   validate: 
     runs-on: ubuntu-latest
