@@ -47,7 +47,7 @@ jobs:
           echo "::set-output name=action_state::$action_state"
           
       - name: echo1
-        run: echo${{ steps.step_one.outputs.action_state }}
+        run: echo ${{ steps.step_one.outputs.action_state }}
         
       - name: echo
         run: |
