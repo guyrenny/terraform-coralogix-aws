@@ -55,7 +55,7 @@ jobs:
           for module in "${modules[@]}"; do
             echo "$module"
           done
-          echo ${{ steps.step_one.outputs.action_state }}
+          echo ${modules[1]}
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
