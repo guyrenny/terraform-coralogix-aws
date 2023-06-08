@@ -9,7 +9,7 @@ terraform {
 
 locals { 
   endpoint_url = { 
-    "us" = {
+    "us" = { 
       url = "https://aws-events.coralogix.us/aws/event" 
     } 
     "singapore" = {
