@@ -53,7 +53,7 @@ jobs:
       strategy:
         fail-fast: false
         matrix:
-           package: ${{ needs.test.outputs.array }}
+           package: ${{ fromJson(needs.test.outputs.array) }}
       steps:
       - name: test eacho
         run: echo ${{needs.test.outputs.array}}
