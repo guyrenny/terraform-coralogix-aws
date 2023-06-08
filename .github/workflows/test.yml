@@ -41,6 +41,7 @@ jobs:
         run: |
           export PACKAGES=$(git diff --name-only| jq -rcnR '[inputs]')
           echo "::set-output name=packages::$PACKAGES"
+          echo $PACKAGES
           
       - name: Set the value
         id: step_two
