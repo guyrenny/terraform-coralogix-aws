@@ -62,7 +62,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{ fromJSON${{ steps.step_one.outputs.action_state }} }}
+        package: ${{ fromJSON( steps.step_one.outputs.action_state ) }}
     steps:
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
