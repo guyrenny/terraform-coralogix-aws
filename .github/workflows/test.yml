@@ -53,7 +53,7 @@ jobs:
       strategy:
         fail-fast: false
         matrix:
-          package: ${{ array[*] }}
+          package: ${{ env.action_state }}
       steps:
       
       - name: terraform fmt
