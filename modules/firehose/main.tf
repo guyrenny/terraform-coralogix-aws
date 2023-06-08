@@ -10,7 +10,7 @@ terraform {
 locals {
   endpoint_url = {
     "us" = {
-      url = "https://firehose-ingress.coralogix.us/firehose"
+      url = "https://firehose-ingress.coralogix.us/firehose" 
     }
     "singapore" = {
       url = "https://firehose-ingress.coralogixsg.com/firehose"
