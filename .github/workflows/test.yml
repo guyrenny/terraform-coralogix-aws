@@ -10,10 +10,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        package: ${{ steps.echo.outputs.array }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -57,8 +53,20 @@ jobs:
           IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
           echo "::set-output name=array::$array
           echo "${array[]}"
+          
+      - name: Define Matrix
+        id: define_matrix
+        run: |
+          echo "::set-output name=matrix::$(echo "${{ steps.step_one.outputs.array }}" | tr ',' '\n')"
 
-
+  validate:
+      runs-on: ubuntu-latest
+      strategy:
+        fail-fast: false
+        matrix:
+          package: ${{ fromJson(steps.define_matrix.outputs.matrix) }}
+      steps:
+      
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
