@@ -62,7 +62,7 @@ jobs:
       strategy:
         fail-fast: false
         matrix:
-          package: ${{ fromJson(needs.env.changes) }}
+          package: ${{ needs.env.changes }}
       steps:
       
       - name: terraform fmt
