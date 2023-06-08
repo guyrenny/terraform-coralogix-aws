@@ -9,7 +9,7 @@ locals {
     Custom       = var.custom_url    
     name      =     1234 
   }    
-  coralogix_url_seffix = "/api/v1/logs"    
+  coralogix_url_seffix = "/api/v1/logs"     
   tags = { 
     Provider = "Coralogix"    
     License  = "Apache-2.0"    
