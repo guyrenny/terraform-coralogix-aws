@@ -44,18 +44,12 @@ jobs:
         id: step_one
         run: |
           export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" )
+          IFS=', ' read -r -a package <<< ${{ steps.step_one.outputs.action_state }}
           echo "::set-output name=action_state::$action_state"
-          
-      - name: echo1
-        run: echo ${{ steps.step_one.outputs.action_state }}
+          echo "test=package" >> $GITHUB_OUTPUT
         
-      - name: echo
-        run: |
-          IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
-          for array in "${array[@]}"; do
-            echo "$array"
-          done
-          echo ${array[1]}
+      - name: split the changes file into array
+        run: echo ${{env.test}}
 
   validate: 
     runs-on: ubuntu-latest
