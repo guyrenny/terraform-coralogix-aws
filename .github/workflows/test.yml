@@ -35,6 +35,18 @@ jobs:
           foldersOnly: false 
           format: csv
           
+          
+      - name: Get Changed Packages
+        id: get-changed-packages
+        run: |
+          export PACKAGES=$(git diff --name-only| jq -rcnR '[inputs]')
+          echo "::set-output name=packages::$PACKAGES"
+          
+      - name: Set the value
+        id: step_two
+        run: |
+          echo "${{ steps.get-changed-packages.outputs.packages }}"
+          
       - name: Set the value
         id: step_one
         run: |
