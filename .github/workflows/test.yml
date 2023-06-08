@@ -52,6 +52,7 @@ jobs:
       - name: echo
         run: |
           IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
+          echo "::set-output name=array::$array
           echo "${array[]}"
 
   validate: 
@@ -59,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{array}}
+        package: ${{ steps.echo.outputs.array }}
     steps:
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
