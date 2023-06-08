@@ -46,10 +46,13 @@ jobs:
 
   validate:
       runs-on: ubuntu-latest
-
+      strategy:
+        fail-fast: false
+        matrix:
+          package: ${{ needs.test.env.action_state }}
       steps:
       - name: test eacho
-        run: echo ${{env.action_state}}
+        run: echo ${{needs.test.env.action_state}}
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
