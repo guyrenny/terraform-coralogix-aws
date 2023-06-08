@@ -44,7 +44,7 @@ jobs:
         id: step_one
         run: |
           export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" )
-          IFS=', ' read -r -a package <<< ${{ steps.step_one.outputs.action_state }}
+          IFS=', ' read -r -a package <<< ${{ steps.get_changed.outputs.changed }}
           echo "::set-output name=action_state::$action_state"
           echo "test=package" >> $GITHUB_OUTPUT
         
