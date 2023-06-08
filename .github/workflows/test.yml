@@ -41,6 +41,8 @@ jobs:
         run: |
           export action_state=$(echo "${{ steps.get_changed.outputs.changed }}" )
           echo "::set-output name=action_state::$action_state"
+      - name: echo1
+        run: echo ${{ env.action_state }}
         
       - name: echo
         run: |
