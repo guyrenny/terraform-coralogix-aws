@@ -51,11 +51,11 @@ jobs:
         
       - name: echo
         run: |
-          IFS=',' read -ra modules <<< "$(echo ${{ steps.step_one.outputs.action_state }} | tr ',' '\n')"          
-          for module in "${modules[@]}"; do
-            echo "$module"
+          IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
+          for array in "${array[@]}"; do
+            echo "$array"
           done
-          echo ${modules[1]}
+          echo ${array[1]}
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
