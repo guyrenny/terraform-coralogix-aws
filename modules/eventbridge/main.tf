@@ -17,7 +17,7 @@ locals {
     }
     "ireland" = {
       url = "https://aws-events.coralogix.com/aws/event" 
-    }
+    } 
     "india" = {
       url = "https://aws-events.coralogix.in/aws/event"
     }
