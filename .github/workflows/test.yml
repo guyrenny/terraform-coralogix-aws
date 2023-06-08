@@ -39,7 +39,7 @@ jobs:
       - name: Get Changed Packages
         id: get-changed-packages
         run: |
-          export PACKAGES=$(git diff --name-only modules/| jq -rcnR '[inputs]')
+          export PACKAGES=$(git diff --name-only ${{'origin/master'}} modules/| jq -rcnR '[inputs]')
           echo "::set-output name=packages::$PACKAGES"
           echo $PACKAGES
           
