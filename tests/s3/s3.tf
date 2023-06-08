@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 module "s3" {
-  source = "../modules/s3"
+  source = "../../modules/s3"
 
   coralogix_region   = "Europe"
   private_key        = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXX"
