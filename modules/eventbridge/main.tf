@@ -11,7 +11,7 @@ locals {
   endpoint_url = { 
     "us" = {
       url = "https://aws-events.coralogix.us/aws/event" 
-    }
+    } 
     "singapore" = {
       url = "https://aws-events.coralogixsg.com/aws/event"
     }
