@@ -52,14 +52,14 @@ jobs:
       - name: echo
         run: |
           IFS=', ' read -r -a array <<< ${{ steps.step_one.outputs.action_state }}
-          echo "${array[1]}"
+          echo "${array[]}"
 
   validate: 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        package: [1,2,3]
+        package: ${{array[]}}
     steps:
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
