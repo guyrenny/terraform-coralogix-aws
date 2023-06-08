@@ -14,7 +14,7 @@ locals {
     Provider = "Coralogix"    
     License  = "Apache-2.0"   
   }  
-}  
+}   
   
 data "aws_region" "this" {}
 
