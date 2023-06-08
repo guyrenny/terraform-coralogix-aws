@@ -56,17 +56,13 @@ jobs:
           echo "changes=${array[*]}" >> $GITHUB_ENV
           echo ${{ env.changes }}
           
-      - name: Define Matrix
-        id: define_matrix
-        run: |
-          echo "::set-output name=matrix::$(echo "${{ steps.step_one.outputs.array }}" | tr ',' '\n')"
 
   validate:
       runs-on: ubuntu-latest
       strategy:
         fail-fast: false
         matrix:
-          package: ${{ fromJson(needs.env.MATRIX) }}
+          package: ${{ fromJson(needs.env.changes) }}
       steps:
       
       - name: terraform fmt
