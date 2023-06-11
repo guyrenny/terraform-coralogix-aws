@@ -38,7 +38,6 @@ jobs:
       - name: get the values
         id: get
         run: |
- 
           IFS=', ' read -r -a array <<< ${{ steps.get_changed.outputs.changed }}
           echo "action_state=${array}" >> $GITHUB_ENV
           
@@ -46,7 +45,8 @@ jobs:
         id: array
         run: |
           echo ${{ env.action_state }}
-          echo myArray=("cat" "dog" "mouse" "frog") >> $GITHUB_ENV
+          export myArray=("cat" "dog" "mouse" "frog")
+          echo "myArray=${myArray}" >> $GITHUB_ENV
         
     outputs: 
       array: ${{ env.myArray }}
