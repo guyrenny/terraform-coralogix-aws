@@ -44,13 +44,14 @@ jobs:
           
       - name: test eacho
         id: array
-        run: echo ${{ env.action_state }}
-        
+        run: |
+          echo ${{ env.action_state }}
+          echo myArray=("cat" "dog" "mouse" "frog") >> $GITHUB_ENV
         
     outputs: 
-      array: ${{ env.action_state }}
+      array: ${{ env.myArray }}
+      
           
-
   validate:
       needs: test
       runs-on: ubuntu-latest
