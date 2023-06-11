@@ -16,7 +16,7 @@ jobs:
   release:
     name: release
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'coralogix'
+    if: github.repository_owner == 'guyrenny'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
