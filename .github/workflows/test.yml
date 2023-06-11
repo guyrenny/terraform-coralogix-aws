@@ -12,7 +12,6 @@ on:
       - "modules/**"
 
 jobs:
- 
   test:
     runs-on: ubuntu-latest
     steps:
@@ -68,8 +67,8 @@ jobs:
         
       - name: Configure AWS credentials
         run: |
-          echo "AWS_ACCESS_KEY_ID=${{outputs.test.AWS_ACCESS_KEY_ID}}" 
-          echo "AWS_SECRET_ACCESS_KEY=${{outputs.test.AWS_SECRET_ACCESS_KEY}}"
+          echo "AWS_ACCESS_KEY_ID=${{needs.test.outputs.AWS_ACCESS_KEY_ID}}" 
+          echo "AWS_SECRET_ACCESS_KEY=${{needs.test.outputs.AWS_SECRET_ACCESS_KEY}}"
           
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
