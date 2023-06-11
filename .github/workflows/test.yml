@@ -29,6 +29,9 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
+    outputs: 
+      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
           
   check:
     name: Check
@@ -64,12 +67,9 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Configure AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         run: |
-          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
+          echo "AWS_ACCESS_KEY_ID=${outputs.test.AWS_ACCESS_KEY_ID}" 
+          echo "AWS_SECRET_ACCESS_KEY=${outputs.test.AWS_SECRET_ACCESS_KEY}"
           
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
