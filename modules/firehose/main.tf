@@ -13,7 +13,7 @@ locals {
       url = "https://firehose-ingress.coralogix.us/firehose" 
     } 
     "singapore" = {
-      url = "https://firehose-ingress.coralogixsg.com/firehose" 
+      url = "https://firehose-ingress.coralogixsg.com/firehose"  
     }  
     "ireland" = { 
       url = "https://firehose-ingress.coralogix.com/firehose"  
