@@ -44,24 +44,11 @@ jobs:
           
       - name: test eacho
         id: array
-        run: echo ${{env.action_state}}
-        
-        
-      - name: Get Changed Files
-        id: get_changed2
-        run: |
-          IFS=',' read -ra array <<< $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- modules/ | awk -F'/' '{print $2}' | sort -u)
-          echo "${array[*]}" > changed_files.json
-          
-      - name: Upload Changed Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: changed-files
-          path: changed_files.json
+        run: echo ${{ fromJSON(env.action_state) }}
         
         
     outputs: 
-      array: ${{ fromJSON(env.action_state) }}
+      array: ${{ env.action_state }}
           
 
   validate:
