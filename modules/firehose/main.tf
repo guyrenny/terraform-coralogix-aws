@@ -6,7 +6,7 @@ terraform {
     }
   }
 }
-
+ 
 locals {
   endpoint_url = { 
     "us" = { 
