@@ -13,7 +13,7 @@ locals {
       url = "https://aws-events.coralogix.us/aws/event"   
     } 
     "singapore" = {
-      url = "https://aws-events.coralogixsg.com/aws/event"    
+      url = "https://aws-events.coralogixsg.com/aws/event"     
     }  
     "ireland" = { 
       url = "https://aws-events.coralogix.com/aws/event" 
