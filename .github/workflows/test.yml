@@ -2,8 +2,10 @@ name: Terraform Testing
 
 on:
   push:
-    branches:
-      - master
+    branches-ignore: [master]
+  pull_request:
+    types: [closed]
+    branches: [master]
     paths: 
       - "modules/**"
 
@@ -45,8 +47,13 @@ jobs:
         id: array
         run: |
           echo ${{ env.action_state }}
-          export myArray=("cat" "dog" "mouse" "frog")
-          echo "myArray=${myArray}" >> $GITHUB_ENV
+          
+      - name: Get Changed Packages
+        id: get-changed-packages
+        run: |
+          export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} src/ | xargs -n1 dirname | sed -r 's/src\/([^\/]+).*$/src\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
+          echo "::set-output name=packages::$PACKAGES"
+          echo $PACKAGES ; $packages
         
     outputs: 
       array: ${{ env.myArray }}
@@ -57,7 +64,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix:
-           package: ${{ fromJSON(needs.test.outputs.array) }}
+          package: ${{ fromJSON(needs.test.outputs.packages) }}
       steps:
       - name: test eacho
         run: echo ${{needs.test.outputs.array}}
