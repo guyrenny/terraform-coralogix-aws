@@ -3,10 +3,12 @@ name: Terraform Testing
 on:
   push:
     branches-ignore: [master]
+    paths:
+      - "modules/**"
   pull_request:
     types: [closed]
     branches: [master]
-    paths: 
+    paths:
       - "modules/**"
 
 jobs:
