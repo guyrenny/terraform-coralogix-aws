@@ -88,7 +88,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix:
-           package: ${{ matrix.changed_files }}
+           package: ${{ needs.test.outputs.array }}
       steps:
       - name: test eacho
         run: echo ${{needs.test.outputs.array}}
