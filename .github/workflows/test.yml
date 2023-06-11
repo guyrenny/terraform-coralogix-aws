@@ -64,11 +64,11 @@ jobs:
         id: get-changed-packages
         run: |
           export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} modules/ | xargs -n1 dirname | sed -r 's/modules\/([^\/]+).*$/modules\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
-          echo "::set-output name=packages::$PACKAGES"
+          echo "packages=$PACKAGES" >> $GITHUB_ENV
 
   validate:
     name: Validate
-    runs-on: aws-sam
+    runs-on: ubuntu-latest
     needs: check
     strategy:
       fail-fast: false
@@ -77,9 +77,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: test eacho
-        run: echo ${{needs.test.outputs.array}}
         
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
