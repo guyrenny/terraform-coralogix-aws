@@ -1,5 +1,5 @@
 locals {
-  function_name = "Coralogix-${var.package_name}-${random_string.this.result}"
+  function_name = "Coralogix-${var.package_name}-${random_string.this.result}" 
   coralogix_regions = {     
     Europe    = "ingress.coralogix.com"   
     Europe2   =  "ingress.eu2.coralogix.com" 
