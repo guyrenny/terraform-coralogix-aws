@@ -27,26 +27,6 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
-
-          
-      - uses: Stockopedia/action-get-changed-files@v1
-        id: get_changed
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          ignore: "**/+(.github)"
-          foldersOnly: false 
-          format: csv
-          
-      - name: get the values
-        id: get
-        run: |
-          IFS=', ' read -r -a array <<< ${{ steps.get_changed.outputs.changed }}
-          echo "action_state=${array}" >> $GITHUB_ENV
-          
-      - name: test eacho
-        id: array
-        run: |
-          echo ${{ env.action_state }}
           
   check:
     name: Check
@@ -84,17 +64,17 @@ jobs:
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
         with:
-          path: ${{ matrix.package }}/
+          path: modules/${{ matrix.package }}/
           
       - name: Terraform Init
         run: terraform init
-        working-directory: tests/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ matrix.package }}
           
       - name: Terraform validate
         run: terraform validate
-        working-directory: tests/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ matrix.package }}
       
       - name: Terraform Plan
         run:  terraform plan
-        working-directory: tests/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ matrix.package }}
         
