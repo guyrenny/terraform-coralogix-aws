@@ -69,7 +69,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix:
-           package: ${{ needs.test.outputs.array }}
+           package: ${{ fromJSON(needs.test.outputs.array) }}
       steps:
       - name: test eacho
         run: echo ${{needs.test.outputs.array}}
