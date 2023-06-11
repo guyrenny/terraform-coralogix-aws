@@ -44,7 +44,7 @@ jobs:
           
       - name: test eacho
         id: array
-        run: echo ${{ fromJSON(env.action_state) }}
+        run: echo ${{ env.action_state }}
         
         
     outputs: 
