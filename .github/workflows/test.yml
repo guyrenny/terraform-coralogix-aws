@@ -61,7 +61,7 @@ jobs:
         
         
     outputs: 
-      array: ${{env.action_state}}
+      array: ${{ fromJSON(env.action_state) }}
           
 
   validate:
