@@ -2,7 +2,7 @@ locals {
   function_name = "Coralogix-${var.package_name}-${random_string.this.result}" 
   coralogix_regions = {     
     Europe    = "ingress.coralogix.com"   
-    Europe2   =  "ingress.eu2.coralogix.com" 
+    Europe2   =  "ingress.eu2.coralogix.com"  
     India     = "ingress.coralogix.in"       
     Singapore = "ingress.coralogixsg.com"        
     US        = "ingress.coralogix.us"         
