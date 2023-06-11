@@ -67,8 +67,8 @@ jobs:
         
       - name: Configure AWS credentials
         run: |
-          echo "AWS_ACCESS_KEY_ID=${{needs.test.outputs.AWS_ACCESS_KEY_ID}}" 
-          echo "AWS_SECRET_ACCESS_KEY=${{needs.test.outputs.AWS_SECRET_ACCESS_KEY}}"
+          echo "AWS_ACCESS_KEY_ID=${{needs.test.outputs.AWS_ACCESS_KEY_ID}}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{needs.test.outputs.AWS_SECRET_ACCESS_KEY}}" >> $GITHUB_ENV
           
       - name: terraform fmt
         uses: dflook/terraform-fmt@v1
