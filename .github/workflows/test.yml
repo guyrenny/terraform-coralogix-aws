@@ -30,7 +30,7 @@ jobs:
         run: |
           export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} modules/ | xargs -n1 dirname | sed -r 's/modules\/([^\/]+).*$/modules\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
           
-          echo "packages=$PACKAGES" >> $GITHUB_ENV
+          echo "packages=$PACKAGES" >> $$GITHUB_OUTPUT
           echo $packages
           echo "::set-output name=packages::$PACKAGES"
           
