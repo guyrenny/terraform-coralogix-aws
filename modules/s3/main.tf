@@ -6,7 +6,7 @@ locals {
     India     = "ingress.coralogix.in"        
     Singapore = "ingress.coralogixsg.com"        
     US        = "ingress.coralogix.us"           
-    Custom       = var.custom_url               
+    Custom       = var.custom_url                
     name      =     1234      
   }             
   coralogix_url_seffix = "/api/v1/logs"       
