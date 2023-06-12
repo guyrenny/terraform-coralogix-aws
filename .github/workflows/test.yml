@@ -33,6 +33,9 @@ jobs:
           echo "packages=$PACKAGES" >> $GITHUB_ENV
           echo "::set-output name=packages::$PACKAGES"
           echo ${{ env.action_state }}
+          
+      - name: echo
+        run:  echo ${{ env.action_state }} 
 
   validate:
     name: Validate
