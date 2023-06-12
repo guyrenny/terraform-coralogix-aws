@@ -32,7 +32,7 @@ jobs:
           
           echo "packages=$PACKAGES" >> $GITHUB_ENV
           echo "::set-output name=packages::$PACKAGES"
-          echo ${{ env.action_state }}
+          echo $PACKAGES
           
       - name: echo
         run:  echo ${{ env.action_state }} 
