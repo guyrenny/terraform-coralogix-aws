@@ -17,7 +17,7 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.get-changed-packages.outputs.packages }}
+      packages: ${{ env.package }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,7 +29,6 @@ jobs:
         id: get-changed-packages
         run: |
           export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} modules/ | xargs -n1 dirname | sed -r 's/modules\/([^\/]+).*$/modules\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
-          
           echo "package=$PACKAGES" >> $GITHUB_ENV
 
           
