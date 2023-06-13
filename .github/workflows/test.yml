@@ -47,7 +47,9 @@ jobs:
         uses: actions/checkout@v3
         
       - name: check diractories
-        run: tests/comper_diractories_test.sh 
+        run: |
+          chmod +x tests/comper_diractories_test.sh
+          tests/comper_diractories_test.sh 
         
       - name: Configure AWS credentials
         env:
