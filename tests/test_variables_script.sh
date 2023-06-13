@@ -31,11 +31,5 @@ while read line; do
 
 done < $file
 
-if [[ $default_counter -eq 0 ]] && [[ $missing_variables != *"$variable_name"* ]]; then
-    if ! grep -q "$variable_name" "s3/s3.tf"; then
-        missing_variables+="$variable_name, "
-    fi
-fi
-
 echo $missing_variables
 rm ./module_test.tf
