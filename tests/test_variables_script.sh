@@ -1,5 +1,7 @@
 #!/bin/bash  
-file=$1 
+cp $1 ./module_test.tf
+file="./module_test.tf"
+echo '' >> ./module_test.tf
 declare -i default_counter=0
 variable_name=""
 declare -i brackets_counter=0
@@ -36,3 +38,4 @@ if [[ $default_counter -eq 0 ]] && [[ $missing_variables != *"$variable_name"* ]
 fi
 
 echo $missing_variables
+rm ./module_test.tf
