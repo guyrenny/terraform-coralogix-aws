@@ -53,11 +53,9 @@ jobs:
           output=$(tests/comper_diractories_test.sh)
           # Check if the output is empty
           if [ -z "$output" ]; then
-            echo "The script returned nothing."
-              # Fail the workflow
+            echo "comper_diractories_test - OK."
           else
-            echo "The script returned something: $output"
-            # Continue with the workflow
+            echo "You need to add this modules to the tests directory: $output"
             exit 1
           fi
           tests/comper_diractories_test.sh 
