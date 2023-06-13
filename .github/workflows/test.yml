@@ -49,6 +49,17 @@ jobs:
       - name: check diractories
         run: |
           chmod +x tests/comper_diractories_test.sh
+          
+          output=$(tests/comper_diractories_test.sh)
+          # Check if the output is empty
+          if [ -z "$output" ]; then
+            echo "The script returned nothing."
+              # Fail the workflow
+          else
+            echo "The script returned something: $output"
+            # Continue with the workflow
+            exit 1
+          fi
           tests/comper_diractories_test.sh 
         
       - name: Configure AWS credentials
