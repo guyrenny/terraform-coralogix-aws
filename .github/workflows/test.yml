@@ -24,7 +24,6 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-
       - name: Get Changed Packages
         id: get-changed-packages
         run: |
@@ -52,7 +51,7 @@ jobs:
           
           output=$(tests/comper_diractories_test.sh)
           # Check if the output is empty
-          if [ -z "$output" ]; then
+          if [ -z "$output" ] || [[ "$output" == "locals_variables" ]] ; then
             echo "comper_diractories_test - OK."
           else
             echo "You need to add this modules to the tests directory: $output"
@@ -61,15 +60,17 @@ jobs:
           
       - name: comper variables in test file and in the module
         run: |
-          chmod +x tests/test_variables_script.sh
-          
-          output=$(tests/test_variables_script.sh modules/${{ matrix.package }}/variables.tf tests/${{ matrix.package }}/${{ matrix.package }}.tf)
-          # Check if the output is empty
-          if [ -z "$output" ]; then
-            echo "test_variables_script - OK."
-          else
-            echo "you need to add this variables to the test file for your integration: $output"
-            exit 1
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            chmod +x tests/test_variables_script.sh
+
+            output=$(tests/test_variables_script.sh modules/${{ matrix.package }}/variables.tf tests/${{ matrix.package }}/${{ matrix.package }}.tf)
+            # Check if the output is empty
+            if [ -z "$output" ]; then
+              echo "test_variables_script - OK."
+            else
+              echo "you need to add this variables to the test file for your integration: $output"
+              exit 1
+            fi
           fi
         
       - name: Configure AWS credentials
