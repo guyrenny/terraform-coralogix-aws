@@ -24,8 +24,6 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: check diractories
-        run: tests/comper_diractories_test.sh 
 
       - name: Get Changed Packages
         id: get-changed-packages
@@ -47,6 +45,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        
+      - name: check diractories
+        run: tests/comper_diractories_test.sh 
         
       - name: Configure AWS credentials
         env:
