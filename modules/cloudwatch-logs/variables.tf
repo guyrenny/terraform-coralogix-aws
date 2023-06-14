@@ -28,7 +28,11 @@ variable "application_name" {
 variable "subsystem_name" {
   description = "The subsystem name of your application"
   type        = string
-  default     = ""
+}
+
+variable "test" {
+  description = "The subsystem name of your application"
+  type        = string
 }
 
 variable "newline_pattern" {
