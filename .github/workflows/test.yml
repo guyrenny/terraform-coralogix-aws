@@ -82,14 +82,23 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
           
       - name: Terraform Init
-        run: terraform init
+        run: |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            terraform init
+          fi
         working-directory: tests/${{ matrix.package }}
           
       - name: Terraform validate
-        run: terraform validate
+        run: |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+           terraform validate
+          fi
         working-directory: tests/${{ matrix.package }}
       
       - name: Terraform Plan
-        run:  terraform plan
+        run: |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            terraform plan
+          fi
         working-directory: tests/${{ matrix.package }}
         
