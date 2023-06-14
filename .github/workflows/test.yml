@@ -2,11 +2,11 @@ name: Terraform Testing
 
 on:
   push:
-    branches-ignore: [master]
+    branches: [master]
     paths:
       - "modules/**"
   pull_request:
-    types: [closed]
+    types: [open]
     branches: [master]
     paths:
       - "modules/**"
