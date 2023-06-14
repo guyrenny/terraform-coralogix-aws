@@ -7,7 +7,7 @@ variable "coralogix_region" {
   }
   default = "Europe"
 }
-
+ 
 variable "custom_url" {
   description = "Your Custom URL for the Coralogix account."
   type        = string

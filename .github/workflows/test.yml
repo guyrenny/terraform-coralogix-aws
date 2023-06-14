@@ -3,56 +3,20 @@ name: Terraform Testing
 on:
   push:
     branches-ignore: [master]
+    paths:
+      - "modules/**"
   pull_request:
     types: [closed]
     branches: [master]
-    paths: 
+    paths:
       - "modules/**"
 
 jobs:
- 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        
-      - name: Configure AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        run: |
-          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
-
-          
-      - uses: Stockopedia/action-get-changed-files@v1
-        id: get_changed
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          ignore: "**/+(.github)"
-          foldersOnly: false 
-          format: csv
-          
-      - name: get the values
-        id: get
-        run: |
-          IFS=', ' read -r -a array <<< ${{ steps.get_changed.outputs.changed }}
-          echo "action_state=${array}" >> $GITHUB_ENV
-          
-      - name: test eacho
-        id: array
-        run: |
-          echo ${{ env.action_state }}
-          
   check:
     name: Check
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.get-changed-packages.outputs.packages }}
+      packages: ${{ env.package }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -64,8 +28,10 @@ jobs:
         id: get-changed-packages
         run: |
           export PACKAGES=$(git diff --name-only --diff-filter=d ${{ github.event.pull_request.base.sha || 'origin/master' }} ${{ github.sha }} modules/ | xargs -n1 dirname | sed -r 's/modules\/([^\/]+).*$/modules\/\1/g' | xargs -n1 basename | sort | uniq | jq -rcnR '[inputs]')
-          echo "packages=$PACKAGES" >> $GITHUB_ENV
-          echo ${{ env.action_state }}
+          echo "package=$PACKAGES" >> $GITHUB_ENV
+          
+      - name: echo
+        run:  echo ${{ env.package }} 
 
   validate:
     name: Validate
@@ -79,20 +45,51 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: terraform fmt
-        uses: dflook/terraform-fmt@v1
-        with:
-          path: ${{ matrix.package }}/
+      - name: check for missing test diractories
+        run: |
+          chmod +x tests/compare_diractories_test.sh
+          
+          output=$(tests/compare_diractories_test.sh)
+          # Check if the output is empty
+          if [ -z "$output" ] || [[ "$output" == "locals_variables" ]] ; then
+            echo "compare_diractories_test - OK."
+          else
+            echo "You need to add this modules to the tests directory: $output"
+            exit 1
+          fi
+          
+      - name: compare variables in test file and in the module
+        run: |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            chmod +x tests/test_variables_script.sh
+
+            output=$(tests/test_variables_script.sh modules/${{ matrix.package }}/variables.tf tests/${{ matrix.package }}/${{ matrix.package }}.tf)
+            # Check if the output is empty
+            if [ -z "$output" ]; then
+              echo "test_variables_script - OK."
+            else
+              echo "you need to add this variables to the test file for your integration: $output"
+              exit 1
+            fi
+          fi
+        
+      - name: Configure AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        run: |
+          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
           
       - name: Terraform Init
         run: terraform init
-        working-directory: tests/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ matrix.package }}
           
       - name: Terraform validate
         run: terraform validate
-        working-directory: tests/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ matrix.package }}
       
       - name: Terraform Plan
         run:  terraform plan
-        working-directory: tests/${{ steps.step_one.outputs.action_state }}
+        working-directory: tests/${{ matrix.package }}
         
