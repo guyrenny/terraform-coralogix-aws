@@ -1,11 +1,14 @@
 #!/bin/bash  
-cp $1 ./module_test.tf
-file="./module_test.tf"
-echo '' >> ./module_test.tf
+# this code will check if there is a variable without a default value in a given module, that is not define in the test for that module.
+
+cp $1 ./module_test_tmp.tf
+file="./module_test_tmp.tf"
+echo '' >> ./module_test_tmp.tf
 declare -i default_counter=0
 variable_name=""
 declare -i brackets_counter=0
 missing_variables=""
+
 while read line; do  
     #Reading each line 
     if [[ "$line" == *"variable"* ]] ; then
@@ -32,4 +35,4 @@ while read line; do
 done < $file
 
 echo $missing_variables
-rm ./module_test.tf
+rm ./module_test_tmp.tf
