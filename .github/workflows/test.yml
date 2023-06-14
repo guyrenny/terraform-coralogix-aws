@@ -35,6 +35,7 @@ jobs:
 
   validate:
     name: Validate
+    if: ${{ matrix.package != 'locals_variable' }}
     runs-on: ubuntu-latest
     needs: check
     strategy:
@@ -82,23 +83,14 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
           
       - name: Terraform Init
-        run: |
-          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
-            terraform init
-          fi
+        run: terraform init
         working-directory: tests/${{ matrix.package }}
           
       - name: Terraform validate
-        run: |
-          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
-           terraform validate
-          fi
+        run: terraform validate
         working-directory: tests/${{ matrix.package }}
       
       - name: Terraform Plan
-        run: |
-          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
-            terraform plan
-          fi
+        run: terraform plan
         working-directory: tests/${{ matrix.package }}
         
