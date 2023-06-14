@@ -45,20 +45,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: check diractories
+      - name: check for missing test diractories
         run: |
-          chmod +x tests/comper_diractories_test.sh
+          chmod +x tests/compare_diractories_test.sh
           
-          output=$(tests/comper_diractories_test.sh)
+          output=$(tests/compare_diractories_test.sh)
           # Check if the output is empty
           if [ -z "$output" ] || [[ "$output" == "locals_variables" ]] ; then
-            echo "comper_diractories_test - OK."
+            echo "compare_diractories_test - OK."
           else
             echo "You need to add this modules to the tests directory: $output"
             exit 1
           fi
           
-      - name: comper variables in test file and in the module
+      - name: compare variables in test file and in the module
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
             chmod +x tests/test_variables_script.sh
@@ -80,11 +80,6 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
-          
-      - name: terraform fmt
-        uses: dflook/terraform-fmt@v1
-        with:
-          path: modules/${{ matrix.package }}/
           
       - name: Terraform Init
         run: terraform init
