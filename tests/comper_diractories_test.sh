@@ -1,4 +1,7 @@
 #!/bin/bash
+# this code will check if there is a new module that dont have a test diractory, in that case it will bring back
+# the missing test file that the user will need to add to the repo.
+
 dir1="tests"
 dir2="modules"
 
