@@ -1,5 +1,6 @@
 #!/bin/bash  
 # this code will check if there is a variable without a default value in a given module, that is not define in the test for that module.
+# if the code find variables that is missing it will echo them back and the user will need to add them to the test for the module.
 
 cp $1 ./module_test_tmp.tf
 file="./module_test_tmp.tf"
