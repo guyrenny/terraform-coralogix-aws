@@ -9,7 +9,7 @@ locals {
     Custom    = var.custom_url
   }
   tags = {
-    Provider = "Coralogix"
+    Provider = "Coralogix" 
     License  = "Apache-2.0"
   }
 }

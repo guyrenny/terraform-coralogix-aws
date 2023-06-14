@@ -9,7 +9,7 @@ data "aws_region" "this" {}
 
 data "aws_kinesis_stream" "stream" {
   name = var.kinesis_stream_name
-}
+} 
 
 resource "random_string" "this" {
   length  = 6
