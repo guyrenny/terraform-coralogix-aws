@@ -8,7 +8,7 @@ terraform {
 }
  
 locals { 
-  endpoint_url = { 
+  endpoint_url = {  
     "us" = { 
       url = "https://firehose-ingress.coralogix.us/firehose" 
     } 
