@@ -5,15 +5,15 @@ locals {
     Europe2   = "ingress.eu2.coralogix.com"
     India     = "ingress.coralogix.in"
     Singapore = "ingress.coralogixsg.com"
-    US        = "ingress.coralogix.us"
+    US        = "ingress.coralogix.us" 
     Custom    = var.custom_url
   }
   tags = {
-    Provider = "Coralogix"
-    License  = "Apache-2.0"
+    Provider = "Coralogix" 
+    License  = "Apache-2.0" 
   }
 }
-
+ 
 data "aws_region" "this" {}
 
 data "aws_cloudwatch_log_group" "this" {

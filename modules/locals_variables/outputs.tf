@@ -15,7 +15,7 @@ output "s3_prefix_map" {
 }
 
 output "s3_suffix_map" {
-  value = local.s3_suffix_map
+  value = local.s3_suffix_map 
 }
 
 output "function_name" {
