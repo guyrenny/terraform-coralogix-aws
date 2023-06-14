@@ -1,25 +1,17 @@
 variable "coralogix_region" {
-  description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US]"
+  description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US, Custom]"
   type        = string
-  default     = "Europe"
+  validation {
+    condition     = contains(["Europe", "Europe2", "India", "Singapore", "US", "Custom"], var.coralogix_region)
+    error_message = "The coralogix region must be one of these values: [Europe, Europe2, India, Singapore, US, Custom]."
+  }
+  default = "Europe"
 }
 
 variable "custom_url" {
-  description = "Your Custom URL for the Coralogix account"
+  description = "Your Custom URL for the Coralogix account."
   type        = string
   default     = ""
-}
-
-variable "ssm_enable" {
-  description = "store coralogix private_key as a secret. True/False"
-  type        = string
-  default     = "false"
-
-}
-
-variable "layer_arn" {
-  description = "Coralogix SSM Layer ARN"
-  type        = string
 }
 
 variable "private_key" {
@@ -36,23 +28,25 @@ variable "application_name" {
 variable "subsystem_name" {
   description = "The subsystem name of your application"
   type        = string
+  default     = ""
 }
 
-variable "s3_bucket_name" {
-  description = "The name of the S3 bucket to watch"
+variable "kinesis_stream_name" {
+  description = "The kinesis stream name"
   type        = string
+  default     = ""
 }
 
-variable "s3_key_prefix" {
-  description = "The S3 path prefix to watch"
+variable "package_name" {
+  description = "The name of the package to use for the function"
   type        = string
-  default     = null
+  default     = "kinesis"
 }
 
-variable "s3_key_suffix" {
-  description = "The S3 path suffix to watch"
+variable "newline_pattern" {
+  description = "The pattern for lines splitting"
   type        = string
-  default     = ".json.gz"
+  default     = "(?:\\r\\n|\\r|\\n)"
 }
 
 variable "memory_size" {
@@ -85,3 +79,13 @@ variable "tags" {
   default     = {}
 }
 
+variable "ssm_enable" {
+  description = "Use SSM for the private key True/False"
+  type        = string
+}
+
+variable "layer_arn" {
+  description = "Coralogix SSM Layer ARN"
+  type        = string
+  default     = ""
+}
