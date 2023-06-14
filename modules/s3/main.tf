@@ -1,17 +1,17 @@
 locals {
   function_name = "Coralogix-${var.package_name}-${random_string.this.result}" 
-  coralogix_regions = {       
-    Europe    = "ingress.coralogix.com"    
-    Europe2   =  "ingress.eu2.coralogix.com"   
-    India     = "ingress.coralogix.in"         
-    Singapore = "ingress.coralogixsg.com"          
-    US        = "ingress.coralogix.us"                  
-    Custom       = var.custom_url                  
+  coralogix_regions = {     
+    Europe    = "ingress.coralogix.com"   
+    Europe2   =  "ingress.eu2.coralogix.com"  
+    India     = "ingress.coralogix.in"       
+    Singapore = "ingress.coralogixsg.com"        
+    US        = "ingress.coralogix.us"          
+    Custom       = var.custom_url               
     name      =     1234      
-  }              
+  }            
   coralogix_url_seffix = "/api/v1/logs"       
-  tags = {     
-    Provider = "Coralogix"     
+  tags = {    
+    Provider = "Coralogix"      
     License  = "Apache-2.0"     
   }     
 }   
