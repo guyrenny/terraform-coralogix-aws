@@ -15,7 +15,7 @@ Manage the application which retrieves logs from `S3` bucket and sends them to y
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.15.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | >= 3.1.0 |
-
+ 
 ## Modules
 
 | Name | Version |
