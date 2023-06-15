@@ -19,7 +19,7 @@ done < <(echo "${dir2_dirs[@]}" "${dir1_dirs[@]}" | tr ' ' '\n' | sort | uniq -u
 
 # Print the elements of the output array
 for dir in "${output_array[@]}"; do
-  if [[! echo $dir1_dirs | grep -q "$dir"]] && [[ "$dir" != "locals_variables" ]] ; then
+  if ! [[ $dir1_dirs =~ "$dir" ]] && [[ "$dir" != "locals_variables" ]]; then
     missing_directoies+="$dir  "
   fi
 done
