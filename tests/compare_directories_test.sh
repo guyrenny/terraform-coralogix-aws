@@ -21,7 +21,7 @@ while IFS= read -r line; do
 done < <(echo "${dir1_dirs[@]}" | tr ' ' '\n')
 
 for dir in "${test_directories[@]}"; do
-    if [[ $dir2_dirs =~ "$dir" ]]  && ! [[ -n $(ls "tests/$dir") ]]; then
+    if [[ $dir2_dirs =~ "$dir" ]] && [[ -n $(ls "tests/$dir"/*.tf 2>/dev/null) ]]; then
         missing_tests_files+="$dir "
     fi
 done
