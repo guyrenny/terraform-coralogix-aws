@@ -47,7 +47,7 @@ jobs:
           if [ -z "$output" ] || [[ "$output" == "locals_variables" ]] ; then
             echo "[INFO] No tests are missing for Terraform module ${{ matrix.package }}."
           else
-            echo "[ERROR] Tests for module $output are missing"
+            echo "$output"
             exit 1
           fi
           
