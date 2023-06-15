@@ -11,7 +11,7 @@ locals {
   sns_enable = var.integration_type == "s3-sns" || var.integration_type == "cloudtrail-sns" ? true : false
 }
  
-data "aws_region" "this" {}
+data "aws_region" "this" {} 
 
 data "aws_caller_identity" "this" {}
  
