@@ -10,5 +10,5 @@ module "cloudtrail" {
   layer_arn        = "<your layer arn>"
   application_name = "cloudtrail"
   subsystem_name   = "logs"
-  s3_bucket_name   = "test-bucket-name"
+  s3_bucket_name   = "test-bucket-name" 
 }
