@@ -14,7 +14,7 @@ data "aws_kinesis_stream" "stream" {
 
 resource "random_string" "this" {
   length  = 6
-  special = false
+  special = false 
 }
 
 module "lambda" {

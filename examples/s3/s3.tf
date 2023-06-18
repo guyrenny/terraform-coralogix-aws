@@ -11,4 +11,4 @@ module "s3" {
   application_name = "s3"
   subsystem_name   = "logs"
   s3_bucket_name   = "test-bucket-name"
-}
+} 

@@ -15,7 +15,7 @@ while read line; do
     if [[ "$line" == *"variable"* ]] ; then
             variable_name=$(echo "$line" | awk -F'"' '{print $2}')   
     fi
-    if [[ "$line" == *"{"* ]] ; then
+    if [[ "$line" == *"{"* ]] ; then 
             let brackets_counter++
     fi
     if [[ "$line" == *"}"* ]] ; then

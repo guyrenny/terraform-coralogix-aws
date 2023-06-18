@@ -9,7 +9,7 @@ on:
     paths:
       - '**/*.tpl'
       - '**/*.py'
-      - '**/*.tf'
+      - '**/*.tf' 
       - '.github/workflows/release.yml'
 
 jobs:

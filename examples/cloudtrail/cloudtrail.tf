@@ -11,4 +11,4 @@ module "cloudtrail" {
   application_name = "cloudtrail"
   subsystem_name   = "logs"
   s3_bucket_name   = "test-bucket-name" 
-}
+} 

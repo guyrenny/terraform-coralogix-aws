@@ -81,7 +81,7 @@ jobs:
             terraform init
 
       - name: Terraform validate
-        if:  ${{ matrix.package }} != "locals_variables" 
+        if:  ${{ matrix.package }} != "locals_variables"  
         run: |
             cd "tests/${{ matrix.package }}"
             terraform validate
