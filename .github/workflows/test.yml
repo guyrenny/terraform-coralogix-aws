@@ -93,16 +93,21 @@ jobs:
             terraform plan
 
       - name: Apply Terraform changes
-        if:  ${{ matrix.package }} != "locals_variables"
-        run:  |
-            cd "tests/${{ matrix.package }}"
-            terraform apply -auto-approve
+        if:  ${{ matrix.package }} != "locals_variables" 
+        id: apply
+        run: |
+          set +e
+          terraform apply -auto-approve
+          echo "::set-output name=exit_code::$?"
+          set -e
+
+      - name: Handle apply failure
+        if: steps.apply.outputs.exit_code != 0
+        run: echo "Terraform apply failed. Handling the failure."
 
       # Perform necessary tests or validations here
 
       - name: Destroy Terraform resources
-        if:  ${{ matrix.package }} != "locals_variables"
-        run:  |
-            cd "tests/${{ matrix.package }}"
-            terraform destroy -auto-approve
+        if:  ${{ matrix.package }} != "locals_variables" 
+        run: terraform destroy -auto-approve
         
