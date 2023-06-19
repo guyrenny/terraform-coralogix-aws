@@ -102,6 +102,16 @@ jobs:
           echo "::set-output name=exit_code::$?"
           set -e
 
+      - name: Apply Terraform changes2
+        if:  ${{ matrix.package }} != "locals_variables" 
+        id: apply2
+        run: |
+          set +e
+          cd "tests/${{ matrix.package }}"
+          terraform apply -auto-approve
+          echo "::set-output name=exit_code::$?"
+          set -e
+
       - name: Handle apply failure
         if: steps.apply.outputs.exit_code != 0
         run: echo "Terraform apply failed. Exit code ${{ steps.apply.outputs.exit_code }}"
@@ -113,4 +123,14 @@ jobs:
         run: |
           cd "tests/${{ matrix.package }}"
           terraform destroy -auto-approve
+          
+      - name: Destroy Terraform resources2
+        if:  ${{ matrix.package }} != "locals_variables" 
+        run: |
+          cd "tests/${{ matrix.package }}"
+          terraform destroy -auto-approve
+          
+      - name: Check error in apply
+        if: steps.apply.outputs.exit_code != 0
+        run: exit 1
         
