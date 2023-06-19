@@ -104,7 +104,7 @@ jobs:
 
       - name: Handle apply failure
         if: steps.apply.outputs.exit_code != 0
-        run: echo steps.apply.outputs.exit_code
+        run: echo "Terraform apply failed. Exit code ${{ steps.apply.outputs.exit_code }}"
 
       # Perform necessary tests or validations here
 
