@@ -21,6 +21,6 @@ module "s3" {
   layer_arn          = "<your layer arn>"
   application_name   = "s3"
   subsystem_name     = "logs"
-  s3_bucket_name     = "github-action-testing-bucket"
+  s3_bucket_name     = "github-action-bucket-testing"
   integration_type   = "s3"
 }
