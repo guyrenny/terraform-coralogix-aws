@@ -110,7 +110,7 @@ jobs:
         run: |
           set +e
           cd "tests/${{ matrix.package }}"
-          terraform apply -auto-approve -var="private_key=${{secrets.TESTING_PRIVATE_KEY}}
+          terraform apply -auto-approve -var="private_key=${{secrets.TESTING_PRIVATE_KEY}}"
           echo "::set-output name=exit_code::$?"
           set -e
 
