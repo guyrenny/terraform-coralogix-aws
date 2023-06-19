@@ -121,8 +121,10 @@ jobs:
       - name: Destroy Terraform resources
         if:  ${{ matrix.package }} != "locals_variables" 
         run: |
+          set +e
           cd "tests/${{ matrix.package }}"
           terraform destroy -auto-approve
+          set -e
           
       - name: Destroy Terraform resources2
         if:  ${{ matrix.package }} != "locals_variables" 
