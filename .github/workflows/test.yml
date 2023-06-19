@@ -97,6 +97,7 @@ jobs:
         id: apply
         run: |
           set +e
+          cd "tests/${{ matrix.package }}"
           terraform apply -auto-approve
           echo "::set-output name=exit_code::$?"
           set -e
@@ -109,5 +110,7 @@ jobs:
 
       - name: Destroy Terraform resources
         if:  ${{ matrix.package }} != "locals_variables" 
-        run: terraform destroy -auto-approve
+        run: |
+          cd "tests/${{ matrix.package }}"
+          terraform destroy -auto-approve
         
