@@ -16,7 +16,7 @@ module "s3" {
   source = "../../modules/s3"
 
   coralogix_region   = "Europe"
-  private_key        = ${{ secrets.TESTING_PRIVATE_KEY }}
+  private_key        = \${{ secrets.TESTING_PRIVATE_KEY }}
   ssm_enable         = "True"
   layer_arn          = "arn:aws:lambda:us-east-1:035955823196:layer:coralogix-ssmlayer:1"
   application_name   = "s3"
