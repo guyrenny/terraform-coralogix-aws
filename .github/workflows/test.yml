@@ -92,4 +92,17 @@ jobs:
             cd "tests/${{ matrix.package }}"
             terraform plan
 
+      - name: Apply Terraform changes
+        if:  ${{ matrix.package }} != "locals_variables"
+        run:  |
+            cd "tests/${{ matrix.package }}"
+            terraform apply -auto-approve
+
+      # Perform necessary tests or validations here
+
+      - name: Destroy Terraform resources
+        if:  ${{ matrix.package }} != "locals_variables"
+        run:  |
+            cd "tests/${{ matrix.package }}"
+            terraform destroy -auto-approve
         
