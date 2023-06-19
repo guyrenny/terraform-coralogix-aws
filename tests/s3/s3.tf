@@ -24,3 +24,8 @@ module "s3" {
   s3_bucket_name     = "github-action-bucket-testing"
   integration_type   = "s3"
 }
+variable "private_key" {
+  description = "Private key for authentication"
+  type        = string
+  default     = ""
+}
