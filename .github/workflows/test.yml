@@ -51,20 +51,20 @@ jobs:
             exit 1
           fi
           
-#       - name: Compare variables in test file and in the module
-#         run: |
-#           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
-#             chmod +x tests/test_variables_script.sh
+      - name: Compare variables in test file and in the module
+        run: |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            chmod +x tests/test_variables_script.sh
 
-#             output=$(tests/test_variables_script.sh modules/${{ matrix.package }}/variables.tf tests/${{ matrix.package }}/${{ matrix.package }}.tf)
-#             # Check if the output is empty
-#             if [ -z "$output" ]; then
-#               echo "test_variables_script - OK."
-#             else
-#               echo "you need to add this variables to the test file for your integration: $output"
-#               exit 1
-#             fi
-#           fi
+            output=$(tests/test_variables_script.sh modules/${{ matrix.package }}/variables.tf tests/${{ matrix.package }}/${{ matrix.package }}.tf)
+            # Check if the output is empty
+            if [ -z "$output" ]; then
+              echo "test_variables_script - OK."
+            else
+              echo "you need to add this variables to the test file for your integration: $output"
+              exit 1
+            fi
+          fi
         
       - name: Configure AWS credentials
         env:
@@ -86,12 +86,12 @@ jobs:
             cd "tests/${{ matrix.package }}"
             terraform validate
       
-#       - name: Terraform plan
-#         if:  ${{ matrix.package }} != "locals_variables" 
-#         run:  |
-#             cd "tests/${{ matrix.package }}"
-#             export TF_VAR_private_key=${{secrets.TESTING_PRIVATE_KEY}}
-#             terraform plan
+      - name: Terraform plan
+        if:  ${{ matrix.package }} != "locals_variables" 
+        run:  |
+            cd "tests/${{ matrix.package }}"
+            export TF_VAR_private_key=${{secrets.TESTING_PRIVATE_KEY}}
+            terraform plan
 
       - name: Apply Terraform changes
         if:  ${{ matrix.package }} != "locals_variables" 
@@ -100,9 +100,7 @@ jobs:
           set +e
           cd "tests/${{ matrix.package }}"
           
-          export private_key="testing_123"
-          echo $private_key
-          echo ${{ secrets.TESTING_PRIVATE_KEY }}
+
           terraform apply -auto-approve -var "private_key=${{ secrets.TESTING_PRIVATE_KEY }}"
           
           terraform apply -auto-approve -var "private_key=${{ secrets.TESTING_PRIVATE_KEY }}"
