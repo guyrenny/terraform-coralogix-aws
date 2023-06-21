@@ -27,5 +27,5 @@ module "s3" {
 variable "private_key" {
   description = "Private key for authentication"
   type        = string
-  default     = ""
+  default     = "12"
 }
