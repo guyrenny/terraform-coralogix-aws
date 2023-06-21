@@ -126,6 +126,7 @@ jobs:
           set +e
           cd "tests/${{ matrix.package }}"
           terraform destroy -auto-approve
+          terraform destroy -auto-approve
           set -e
           
       - name: Destroy Terraform resources2
