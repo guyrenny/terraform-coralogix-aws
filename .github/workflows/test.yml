@@ -103,20 +103,11 @@ jobs:
           export private_key="testing_123"
           echo $private_key
           echo ${{ secrets.TESTING_PRIVATE_KEY }}
-          terraform apply -auto-approve
+          terraform apply -var "private_key=$private_key"
           
           terraform apply -auto-approve
           echo "::set-output name=exit_code::$?"
           set -e
-
-#       - name: Apply Terraform changes2
-#         if:  ${{ matrix.package }} != "locals_variables" 
-#         id: apply2
-#         run: |
-#           set +e
-#           cd "tests/${{ matrix.package }}"
-
-#           set -e
 
       - name: Handle apply failure
         if: steps.apply.outputs.exit_code != 0
