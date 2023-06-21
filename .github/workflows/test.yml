@@ -100,17 +100,19 @@ jobs:
           set +e
           cd "tests/${{ matrix.package }}"
           terraform apply -auto-approve -var="private_key=${{secrets.TESTING_PRIVATE_KEY}}"
-          set -e
-
-      - name: Apply Terraform changes2
-        if:  ${{ matrix.package }} != "locals_variables" 
-        id: apply2
-        run: |
-          set +e
-          cd "tests/${{ matrix.package }}"
+          
           terraform apply -auto-approve -var="private_key=${{secrets.TESTING_PRIVATE_KEY}}"
           echo "::set-output name=exit_code::$?"
           set -e
+
+#       - name: Apply Terraform changes2
+#         if:  ${{ matrix.package }} != "locals_variables" 
+#         id: apply2
+#         run: |
+#           set +e
+#           cd "tests/${{ matrix.package }}"
+
+#           set -e
 
       - name: Handle apply failure
         if: steps.apply.outputs.exit_code != 0
