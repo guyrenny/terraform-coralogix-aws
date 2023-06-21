@@ -86,12 +86,12 @@ jobs:
             cd "tests/${{ matrix.package }}"
             terraform validate
       
-      - name: Terraform plan
-        if:  ${{ matrix.package }} != "locals_variables" 
-        run:  |
-            cd "tests/${{ matrix.package }}"
-            export TF_VAR_private_key=${{secrets.TESTING_PRIVATE_KEY}}
-            terraform plan
+#       - name: Terraform plan
+#         if:  ${{ matrix.package }} != "locals_variables" 
+#         run:  |
+#             cd "tests/${{ matrix.package }}"
+#             export TF_VAR_private_key=${{secrets.TESTING_PRIVATE_KEY}}
+#             terraform plan
 
       - name: Apply Terraform changes
         if:  ${{ matrix.package }} != "locals_variables" 
@@ -99,9 +99,9 @@ jobs:
         run: |
           set +e
           cd "tests/${{ matrix.package }}"
-          terraform apply -auto-approve -var="private_key=${{secrets.TESTING_PRIVATE_KEY}}"
+          terraform apply -auto-approve
           
-          terraform apply -auto-approve -var="private_key=${{secrets.TESTING_PRIVATE_KEY}}"
+          terraform apply -auto-approve
           echo "::set-output name=exit_code::$?"
           set -e
 
