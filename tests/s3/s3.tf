@@ -25,7 +25,4 @@ module "s3" {
   integration_type   = "s3"
 }
 
-variable "private_key" {
-  type    = string
-  default = "from-test"
-}
+
