@@ -115,7 +115,7 @@ jobs:
 
       # Perform necessary tests or validations here
 
-      - name: Destroy Terraform resources
+      - name: Destroy Terraform resources 
         if:  ${{ matrix.package }} != "locals_variables" 
         run: |
           set +e
