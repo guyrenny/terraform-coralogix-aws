@@ -100,7 +100,7 @@ jobs:
           set +e
           cd "tests/${{ matrix.package }}"
           
-          export private_key=${{ secrets.TESTING_PRIVATE_KEY }}
+          export private_key="testing_123"
           echo $private_key
           echo ${{ secrets.TESTING_PRIVATE_KEY }}
           terraform apply -auto-approve
