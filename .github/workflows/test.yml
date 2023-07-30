@@ -75,7 +75,7 @@ jobs:
       - name: Terraform init
         if:  ${{ matrix.package }} != "locals_variables" 
         run: |
-          if ${{ matrix.package }} != "locals_variables";then
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
             terraform init
           fi
@@ -83,7 +83,7 @@ jobs:
       - name: Terraform validate
         if:  ${{ matrix.package }} != "locals_variables" 
         run: |
-          if ${{ matrix.package }} != "locals_variables";then
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
             terraform validate
           fi
@@ -91,7 +91,7 @@ jobs:
       - name: Terraform plan
         if:  ${{ matrix.package }} != "locals_variables" 
         run:  |
-          if "${{ matrix.package }}" != "locals_variables";then
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
             terraform plan
           fi
