@@ -7,7 +7,7 @@ terraform {
   }
 }
 
-
+ 
 
 locals {
   endpoint_url = {
