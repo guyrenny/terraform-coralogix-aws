@@ -5,7 +5,7 @@ terraform {
       version = "~> 4.17.1"
     }
   }
-}
+} 
 
 locals {
   endpoint_url = {
