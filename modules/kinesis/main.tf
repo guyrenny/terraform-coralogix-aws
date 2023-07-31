@@ -5,6 +5,7 @@ module "locals" {
   random_string    = random_string.this.result
 }
 
+
 data "aws_region" "this" {}
 
 data "aws_kinesis_stream" "stream" {
