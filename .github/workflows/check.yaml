@@ -15,7 +15,7 @@ jobs:
       - run: echo "labels=${{ steps.pr-labels.outputs.labels }}" >> $GITHUB_ENV
         
   check-changelog-updates:
-    if: "${{ needs.get-label.outputs.labels != 'skip changelog' }}"
+    if: "${{ needs.get-label.outputs.labels != '*skip changelog*' }}"
     runs-on: ubuntu-latest
     needs: get-label
     name: Check changelog update
