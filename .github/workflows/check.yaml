@@ -3,36 +3,37 @@ on:
   pull_request:
 
 jobs:
-  check-docs:
+  get-label:
     runs-on: ubuntu-latest
-    name: Check Documentation formatting and links
+    name: get label
+    outputs:
+      labels: "${{ steps.pr-labels.outputs.labels }}"
     steps:
-    - uses: actions/checkout@v3
-    - name: Import environment variables from file
-      run: cat ".github/env" >> $GITHUB_ENV
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '${{ env.golang-version }}'
-    - uses: actions/cache@v3
-      with:
-        path: .mdoxcache
-        key: mdoxcache
-    - run: make check-docs
+      - name: Get PR labels
+        id: pr-labels
+        uses: joerick/pr-labels-action@v1.0.8
+        
   check-changelog-updates:
-    if: github.event.label.name != 'skip changelog'
+    if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
+    needs: get-label
     name: Check changelog update
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: | # Determine where the change occured and run the appropriate check.
-          s3-integration:
-            - 'modules/s3/**'
-      # Look for diff in the changelog file.
-    - name: Logs Changelog
-      if: steps.filter.outputs.s3-integration == 'true'
-      run: ./changelog_check.sh modules/s3
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v37
+
+    - name: Move integrations files
+      run: |
+        changed_files_string="${{ steps.changed-files.outputs.all_changed_files }}"
+        read -ra changed_files_array <<< "$changed_files_string"
+        chmod +x changelog_check.sh
+        for changed_file in "${changed_files_array[@]}"; do
+          integration=$(echo "$changed_file" | xargs -n1 dirname | xargs -n1 basename)
+          if [[ $changed_file == "modules/**/main.tf" ]]; then
+            ./changelog_check.sh $changed_file
+          fi
+        done
