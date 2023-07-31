@@ -16,7 +16,6 @@ jobs:
   release:
     name: release
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'coralogix'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,9 +24,9 @@ jobs:
           fetch-depth: 0
 
       - name: Release
-        uses: cycjimmy/semantic-release-action@v3.4.2
+        uses: cycjimmy/semantic-release-action@v3
         with:
-          semantic_version: 19.0.5
+          semantic_version: 19.0.2
           extra_plugins: |
             conventional-changelog-conventionalcommits@4.6.3
         env:

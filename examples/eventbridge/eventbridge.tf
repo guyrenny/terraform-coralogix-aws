@@ -1,6 +1,6 @@
 provider "aws" {
 }
-
+ 
 module "eventbridge_coralogix" {
   source             = "github.com/coralogix/terraform-coralogix-aws//modules/eventbridge"
   eventbridge_stream = var.coralogix_eventbridge_stream_name
