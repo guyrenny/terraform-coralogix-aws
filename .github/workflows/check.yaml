@@ -33,7 +33,7 @@ jobs:
         chmod +x changelog_check.sh
         for changed_file in "${changed_files_array[@]}"; do
           integration=$(echo "$changed_file" | xargs -n1 dirname | xargs -n1 basename)
-          if [[ $changed_file == "modules/**/main.tf" ]]; then
+          if [[ $changed_file == "*/main.tf" ]]; then
             ./changelog_check.sh $changed_file
             echo $changed_file
           fi
