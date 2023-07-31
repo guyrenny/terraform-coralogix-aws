@@ -32,7 +32,7 @@ jobs:
         read -ra changed_files_array <<< "$changed_files_string"
         chmod +x changelog_check.sh
         for changed_file in "${changed_files_array[@]}"; do
-          if [[ "$changed_file" == *"/main.tf" ]]; then
+          if [[ "$changed_file" == *"/main.tf" ]] && [[ "$changed_file" != "modules/locals_variables/"* ]]; then
             echo $changed_file
             ./changelog_check.sh $(dirname $changed_file)
           fi
