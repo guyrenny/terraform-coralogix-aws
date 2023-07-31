@@ -1,5 +1,5 @@
 module "locals" {
-  source = "../locals_variables"
+  source = "../locals_variables" 
 
   integration_type = var.integration_type
   random_string    = random_string.this.result
