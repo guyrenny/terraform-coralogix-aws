@@ -21,6 +21,6 @@ jobs:
     - name: Logs Changelog
       if: steps.filter.outputs.s3-integration == 'true'
       run: |
-        echo ${{ github.event.label.name }}
+        echo "${{ github.event.label.name }}"
         chmod +x changelog_check.sh
         ./changelog_check.sh modules/s3
