@@ -22,17 +22,18 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: | # Determine where the change occurred and run the appropriate check.
-          s3-integration:
-            - 'modules/s3/**'
-      # Look for diff in the changelog file.
-    - name: Logs Changelog
-      if: steps.filter.outputs.s3-integration == 'true'
-      run: |
-        echo "${{ needs.get-label.outputs.labels }}"
-        chmod +x changelog_check.sh
-        ./changelog_check.sh modules/s3
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v37
 
+    - name: Move integrations files
+      run: |
+        changed_files_string="${{ steps.changed-files.outputs.all_changed_files }}"
+        read -ra changed_files_array <<< "$changed_files_string"
+        chmod +x changelog_check.sh
+        for changed_file in "${changed_files_array[@]}"; do
+          integration=$(echo "$changed_file" | xargs -n1 dirname | xargs -n1 basename)
+          if [[ $changed_file == "modules/**/main.tf" ]]; then
+            ./changelog_check.sh $changed_file
+          fi
+        done
