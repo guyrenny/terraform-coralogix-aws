@@ -4,4 +4,4 @@ module "cloudwatch_firehose_coralogix" {
   private_key                    = var.private_key
   enable_cloudwatch_metricstream = false
   coralogix_region               = var.coralogix_region
-}
+} 
