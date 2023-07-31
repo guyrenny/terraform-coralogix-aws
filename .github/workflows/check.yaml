@@ -10,6 +10,7 @@ jobs:
       - name: Get PR labels
         id: pr-labels
         uses: joerick/pr-labels-action@v1.0.8
+      - run: echo "labels=${{ steps.pr-labels.outputs.labels }}" >> $GITHUB_ENV
         
   check-changelog-updates:
     if: ${{ github.event.label.name != 'skip changelog' }}
@@ -31,6 +32,6 @@ jobs:
     - name: Logs Changelog
       if: steps.filter.outputs.s3-integration == 'true'
       run: |
-        echo "${{ steps.pr-labels.outputs.labels }}"
+        echo "${{ env.labels }}"
         chmod +x changelog_check.sh
         ./changelog_check.sh modules/s3
