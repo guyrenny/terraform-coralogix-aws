@@ -34,6 +34,7 @@ jobs:
         for changed_file in "${changed_files_array[@]}"; do
           integration=$(echo "$changed_file" | xargs -n1 dirname | xargs -n1 basename)
           if [[ $changed_file == "modules/**/main.tf" ]]; then
+            echo $changed_file
             ./changelog_check.sh $changed_file
           fi
         done
