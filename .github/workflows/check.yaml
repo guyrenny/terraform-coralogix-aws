@@ -3,6 +3,14 @@ on:
   pull_request:
 
 jobs:
+  get-label:
+    runs-on: ubuntu-latest
+    name: get label
+    steps:
+      - name: Get PR labels
+        id: pr-labels
+        uses: joerick/pr-labels-action@v1.0.8
+        
   check-changelog-updates:
     if: ${{ github.event.label.name != 'skip changelog' }}
     runs-on: ubuntu-latest
@@ -11,9 +19,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Get PR labels
-      id: pr-labels
-      uses: joerick/pr-labels-action@v1.0.8
+
       
     - uses: dorny/paths-filter@v2
       id: filter
