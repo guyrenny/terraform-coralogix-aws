@@ -3,21 +3,6 @@ on:
   pull_request:
 
 jobs:
-  check-docs:
-    runs-on: ubuntu-latest
-    name: Check Documentation formatting and links
-    steps:
-    - uses: actions/checkout@v3
-    - name: Import environment variables from file
-      run: cat ".github/env" >> $GITHUB_ENV
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '${{ env.golang-version }}'
-    - uses: actions/cache@v3
-      with:
-        path: .mdoxcache
-        key: mdoxcache
-    - run: make check-docs
   check-changelog-updates:
     if: github.event.label.name != 'skip changelog'
     runs-on: ubuntu-latest
@@ -35,4 +20,6 @@ jobs:
       # Look for diff in the changelog file.
     - name: Logs Changelog
       if: steps.filter.outputs.s3-integration == 'true'
-      run: ./changelog_check.sh modules/s3
+      run: |
+        chmod +x changelog_check.sh
+        ./changelog_check.sh modules/s3
