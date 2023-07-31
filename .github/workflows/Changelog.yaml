@@ -1,4 +1,4 @@
-name: checks
+name: Changelog
 on:
   pull_request:
     types: [opened, synchronize]
