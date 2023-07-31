@@ -4,7 +4,7 @@ on:
 
 jobs:
   check-changelog-updates:
-    if: github.event.label.name != 'skip changelog'
+    if: ${{ github.event.label.name != 'skip changelog' }}
     runs-on: ubuntu-latest
     name: Check changelog update
     steps:
