@@ -35,5 +35,6 @@ jobs:
           integration=$(echo "$changed_file" | xargs -n1 dirname | xargs -n1 basename)
           if [[ $changed_file == "modules/**/main.tf" ]]; then
             ./changelog_check.sh $changed_file
+            echo $changed_file
           fi
         done
