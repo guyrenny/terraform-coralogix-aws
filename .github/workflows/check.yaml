@@ -30,18 +30,9 @@ jobs:
       id: filter
       with:
         filters: | # Determine where the change occured and run the appropriate check.
-          logs-fluent-bit-coralogix:
-            - 'logs/fluent-bit/k8s-helm/coralogix/**'
-          logs-fluent-bit-http:
-            - 'logs/fluent-bit/k8s-helm/http/**'
-          logs-fluentd-coralogix:
-            - 'logs/fluentd/k8s-helm/coralogix/**'
-          logs-fluentd-http:
-            - 'logs/fluentd/k8s-helm/http/**'
+          s3-integration:
+            - 'modules/s3/**'
       # Look for diff in the changelog file.
     - name: Logs Changelog
-      if: steps.filter.outputs.logs-fluent-bit-coralogix == 'true' ||
-        steps.filter.outputs.logs-fluent-bit-http == 'true' ||
-        steps.filter.outputs.logs-fluentd-http == 'true' ||
-        steps.filter.outputs.logs-fluentd-http == 'true'
-      run: ./changelog_check.sh logs
+      if: steps.filter.outputs.s3-integration == 'true'
+      run: ./changelog_check.sh modules/s3
