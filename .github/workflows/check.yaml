@@ -14,7 +14,7 @@ jobs:
         uses: joerick/pr-labels-action@v1.0.8
         
   check-changelog-updates:
-    if: "${{ needs.get-label.outputs.labels == 'skip-changelog' }}"
+    if: "${{ needs.get-label.outputs.labels != 'skip-changelog' }}"
     runs-on: ubuntu-latest
     needs: get-label
     name: Check changelog update
@@ -25,7 +25,7 @@ jobs:
     - uses: dorny/paths-filter@v2
       id: filter
       with:
-        filters: | # Determine where the change occured and run the appropriate check.
+        filters: | # Determine where the change occurred and run the appropriate check.
           s3-integration:
             - 'modules/s3/**'
       # Look for diff in the changelog file.
@@ -35,3 +35,4 @@ jobs:
         echo "${{ needs.get-label.outputs.labels }}"
         chmod +x changelog_check.sh
         ./changelog_check.sh modules/s3
+
