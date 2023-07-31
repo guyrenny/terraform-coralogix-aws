@@ -4,7 +4,7 @@ module "cloudwatch_firehose_coralogix" {
   logs_enable           = true
   metric_enable         = false
   private_key           = var.private_key
-  coralogix_region      = var.coralogix_region
+  coralogix_region      = var.coralogix_region 
   integration_type_logs = "Default"
   source_type_logs      = "DirectPut"
 }
