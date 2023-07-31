@@ -1,6 +1,6 @@
 locals {
   function_name = "Coralogix-${var.integration_type}-${var.random_string}"
-
+ 
   coralogix_regions = {
     Europe    = "ingress.coralogix.com"
     Europe2   = "ingress.eu2.coralogix.com"
