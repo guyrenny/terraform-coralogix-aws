@@ -10,7 +10,7 @@ locals {
   kms_metrics_validation   = local.metrics_validations && var.metrics_kms_arn != "" && contains(split(":", var.metrics_kms_arn), var.coralogix_region)
   coralogix_arn            = "arn:aws:iam::625240141681:root"
 }
-
+ 
 data "aws_region" "current" {}
 
 resource "aws_s3_bucket" "logs_bucket_name" {
