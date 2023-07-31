@@ -1,6 +1,10 @@
 name: checks
 on:
   pull_request:
+    types: [opened]
+    branches: [master]
+    paths:
+      - "modules/**"
 
 jobs:
   get-label:
