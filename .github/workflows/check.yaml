@@ -6,6 +6,8 @@ jobs:
   get-label:
     runs-on: ubuntu-latest
     name: get label
+    outputs:
+      lable: "${{ steps.pr-labels.outputs.labels }}"
     steps:
       - name: Get PR labels
         id: pr-labels
@@ -32,6 +34,6 @@ jobs:
     - name: Logs Changelog
       if: steps.filter.outputs.s3-integration == 'true'
       run: |
-        echo "${{ env.labels }}"
+        echo "${{ needs.get-label.outputs.label }}"
         chmod +x changelog_check.sh
         ./changelog_check.sh modules/s3
