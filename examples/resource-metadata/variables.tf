@@ -1,11 +1,10 @@
 variable "coralogix_region" {
-  description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US, Custom]"
+  description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US]"
   type        = string
   validation {
     condition     = contains(["Europe", "Europe2", "India", "Singapore", "US", "US2", "Custom"], var.coralogix_region)
     error_message = "The coralogix region must be one of these values: [Europe, Europe2, India, Singapore, US, US2, Custom]."
   }
-  default = "Europe"
 }
 
 variable "custom_url" {
@@ -20,39 +19,20 @@ variable "private_key" {
   sensitive   = true
 }
 
-variable "application_name" {
-  description = "The name of your application"
+variable "ssm_enable" {
+  description = "Use SSM for the private key True/False"
   type        = string
 }
 
-variable "subsystem_name" {
-  description = "The subsystem name of your application"
+variable "layer_arn" {
+  description = "Coralogix SSM Layer ARN"
   type        = string
-  default     = ""
-}
-
-variable "kinesis_stream_name" {
-  description = "The kinesis stream name"
-  type        = string
-  default     = ""
-}
-
-variable "package_name" {
-  description = "The name of the package to use for the function"
-  type        = string
-  default     = "kinesis"
-}
-
-variable "newline_pattern" {
-  description = "The pattern for lines splitting"
-  type        = string
-  default     = "(?:\\r\\n|\\r|\\n)"
 }
 
 variable "memory_size" {
   description = "Lambda function memory limit"
   type        = number
-  default     = 1024
+  default     = 256
 }
 
 variable "timeout" {
@@ -67,24 +47,44 @@ variable "architecture" {
   default     = "x86_64"
 }
 
+variable "schedule" {
+  description = ""
+  type = string
+  default = "rate(10 minutes)"
+}
+
+variable "latest_versions_per_function" {
+  description = "How many latest published versions of each Lambda function should be collected"
+  type = number
+  default = 5
+}
+
+variable "resource_ttl_minutes" {
+  type = number
+  description = "Once a resource is collected, how long should it remain valid"  
+  default = 60
+}
+
 variable "notification_email" {
   description = "Failure notification email address"
   type        = string
   default     = null
 }
 
+variable "package_name" {
+  description = "Failure notification email address"
+  type        = string
+  default     = "resource-metadata"
+}
+
+variable "collect_aliases" {
+  description = "Collect Aliases"
+  type        = string
+  default     = "False"
+}
+
 variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
   default     = {}
-}
-
-variable "ssm_enable" {
-  description = "Use SSM for the private key True/False"
-  type        = string
-}
-
-variable "layer_arn" {
-  description = "Coralogix SSM Layer ARN"
-  type        = string
 }
