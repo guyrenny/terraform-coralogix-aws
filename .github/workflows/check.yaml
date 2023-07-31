@@ -38,42 +38,10 @@ jobs:
             - 'logs/fluentd/k8s-helm/coralogix/**'
           logs-fluentd-http:
             - 'logs/fluentd/k8s-helm/http/**'
-          ec2-otel-agent:
-            - 'otel-agent/ecs-ec2/**'
-          windows-image:
-            - 'otel-agent/otel-collector-windows-image/**'
-          k8s-otel-agent:
-            - 'otel-agent/k8s-helm/**'
-          otel-infrastructure-collector:
-            - 'otel-infrastructure-collector/k8s-helm/**'
-          otel-integration:
-            - 'otel-integration/k8s-helm/**'
-          metrics-prometheus-agent:
-            - 'metrics/prometheus-agent/**'
-          metrics-prometheus-operator:
-            - 'metrics/prometheus/operator/**'
       # Look for diff in the changelog file.
     - name: Logs Changelog
       if: steps.filter.outputs.logs-fluent-bit-coralogix == 'true' ||
         steps.filter.outputs.logs-fluent-bit-http == 'true' ||
         steps.filter.outputs.logs-fluentd-http == 'true' ||
         steps.filter.outputs.logs-fluentd-http == 'true'
-      run: scripts/changelog_check.sh logs
-    - name: OpenTelemetry Agent K8S Changelog
-      if: steps.filter.outputs.k8s-otel-agent == 'true'
-      run: scripts/changelog_check.sh otel-agent/k8s-helm
-    - name: OpenTelemetry Agent EC2 Changelog
-      if: steps.filter.outputs.ec2-otel-agent == 'true'
-      run: scripts/changelog_check.sh otel-agent/ecs-ec2
-    - name: OpenTelemetry Collector Windows Image
-      if: steps.filter.outputs.windows-image== 'true'
-      run: scripts/changelog_check.sh otel-agent/otel-collector-windows-image
-    - name: OpenTelemetry Infrastructure Collector Changelog
-      if: steps.filter.outputs.otel-infrastructure-collector == 'true'
-      run: scripts/changelog_check.sh otel-infrastructure-collector
-    - name: OpenTelemetry Integration Changelog
-      if: steps.filter.outputs.otel-integration == 'true'
-      run: scripts/changelog_check.sh otel-integration
-    - name: Prometheus Agent Changelog
-      if: steps.filter.outputs.metrics-prometheus-agent == 'true'
-      run: scripts/changelog_check.sh metrics/prometheus-agent
+      run: ./changelog_check.sh logs
