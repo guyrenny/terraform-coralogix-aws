@@ -34,6 +34,6 @@ jobs:
         for changed_file in "${changed_files_array[@]}"; do
           if [[ "$changed_file" == *"/main.tf" ]]; then
             echo $changed_file
-            ./changelog_check.sh $changed_file
+            ./changelog_check.sh $(dirname $changed_file)
           fi
         done
