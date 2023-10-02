@@ -9,6 +9,7 @@ on:
 
 jobs:
   check:
+    if: github.repository != "master"
     name: Check
     runs-on: ubuntu-latest
     outputs:
