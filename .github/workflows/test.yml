@@ -20,6 +20,11 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: echo
+        run: |
+          echo ${{ github.event.pull_request.head.repo.full_name }}
+          echo ${{ github.repository }}
+
       - name: Get changed packages
         id: get-changed-packages
         run: |
