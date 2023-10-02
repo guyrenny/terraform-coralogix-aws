@@ -20,6 +20,11 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: echo
+        run: |
+          echo ${{ github.event.pull_request.head.repo.full_name }}
+          echo ${{ github.repository }}
+
       - name: Get changed packages
         id: get-changed-packages
         run: |
@@ -38,6 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
+         
       - name: Check for missing test directories
         run: |
           chmod +x tests/compare_directories_test.sh
@@ -49,7 +55,7 @@ jobs:
             echo "$output"
             exit 1
           fi
-          
+
       - name: Compare variables in test file and in the module
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
@@ -63,30 +69,34 @@ jobs:
               exit 1
             fi
           fi
-        
-      - name: Configure AWS credentials
+
+      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        name: Configure AWS credentials
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.TESTING_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.TESTING_SECRET_ACCESS_KEY }}
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
-          
-      - name: Terraform init
+
+      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository  }}
+        name: Terraform init
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
             terraform init
           fi
-          
-      - name: Terraform validate
+
+      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }} 
+        name: Terraform validate
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
             terraform validate
           fi
-      
-      - name: Terraform plan
+          
+      - if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        name: Terraform plan
         run:  |
           if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
