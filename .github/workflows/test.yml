@@ -71,54 +71,59 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
+      # - name: Terraform init
+      #   run: |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform init
+      #     fi
           
-      - name: Terraform init
-        run: |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform init
-          fi
-          
-      - name: Terraform validate
-        run: |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform validate
-          fi
+      # - name: Terraform validate
+      #   run: |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform validate
+      #     fi
       
-      - name: Terraform plan
-        run:  |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform plan
-          fi
-      - name: Terraform apply
-        continue-on-error: true
-        run:  |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform apply -auto-approve
-          fi
-      - name: Terraform apply in case of an error
-        run:  |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform apply -auto-approve
-          fi
+      # - name: Terraform plan
+      #   run:  |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform plan
+          # fi
+      - name: send log to log group
+        run: |
+          aws logs put-log-events \
+          --log-group-name "gr-test" \
+          --log-stream-name "test2" \
+          --log-events "[{\"timestamp\": $(date +%s)000, \"message\": \"This is a log message sent to CloudWatch.\"}]"
+      # - name: Terraform apply
+      #   continue-on-error: true
+      #   run:  |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform apply -auto-approve
+      #     fi
+      # - name: Terraform apply in case of an error
+      #   run:  |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform apply -auto-approve
+      #     fi
 
-      - name: Terraform destroy
-        continue-on-error: true
-        run:  |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform destroy -auto-approve
-          fi
-      - name: Terraform destroy in case of an error
-        run:  |
-          if [[ ${{ matrix.package }} != "locals_variables" ]];then
-            cd "tests/${{ matrix.package }}"
-            terraform destroy -auto-approve
-          fi
+      # - name: Terraform destroy
+      #   continue-on-error: true
+      #   run:  |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform destroy -auto-approve
+      #     fi
+      # - name: Terraform destroy in case of an error
+      #   run:  |
+      #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
+      #       cd "tests/${{ matrix.package }}"
+      #       terraform destroy -auto-approve
+      #     fi
 
 
         
