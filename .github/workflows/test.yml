@@ -77,7 +77,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.TESTING_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.TESTING_SECRET_ACCESS_KEY }}
-
+          aws-region: us-east-1 
       # - name: Terraform init
       #   run: |
       #     if [[ ${{ matrix.package }} != "locals_variables" ]];then
