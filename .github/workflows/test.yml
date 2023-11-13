@@ -104,17 +104,13 @@ jobs:
         run:  |
           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
             cd "tests/${{ matrix.package }}"
-            # Run Terraform apply and capture the output
-            LAMBDA_NAME=$(terraform apply -auto-approve -var="lambda_name" | grep "lambda_name" | awk '{print $3}')
-            echo "LAMBDA_NAME=$LAMBDA_NAME" >> $GITHUB_ENV
+            terraform apply -auto-approve
           fi
       - name: Terraform apply
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
             cd "tests/${{ matrix.package }}"
-            # Run Terraform apply and capture the output
-            LAMBDA_NAME=$(terraform apply -auto-approve -var="lambda_name" | grep "lambda_name" | awk '{print $3}')
-            echo "LAMBDA_NAME=$LAMBDA_NAME" >> $GITHUB_ENV
+            terraform apply -auto-approve
           fi
 
       - name: send log to log group
