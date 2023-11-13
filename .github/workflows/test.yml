@@ -105,13 +105,16 @@ jobs:
           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
             cd "tests/${{ matrix.package }}"
             terraform apply -auto-approve
-          fi
+
       - name: Terraform apply
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]]; then
             cd "tests/${{ matrix.package }}"
             terraform apply -auto-approve
           fi
+
+      - name: Add Sleep Before Step
+        run: sleep 20s
 
       - name: send log to log group
         continue-on-error: true
@@ -120,6 +123,9 @@ jobs:
           --log-group-name  "gr-test" --log-stream-name "test2" \
           --log-events "[{\"timestamp\": $(date +%s)000, \"message\": \"This is a log message sent to CloudWatch.\"}]"
       
+      - name: Add Sleep Before Step
+        run: sleep 20s
+        
       - name: Validate Lambda Function
         continue-on-error: true
         run: |
