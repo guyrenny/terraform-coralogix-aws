@@ -93,11 +93,32 @@ jobs:
             terraform plan
           fi
       - name: Terraform apply
+        continue-on-error: true
         run:  |
           if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
             terraform apply -auto-approve
+          fi
+      - name: Terraform apply in case of an error
+        run:  |
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
+            cd "tests/${{ matrix.package }}"
+            terraform apply -auto-approve
+          fi
+
+      - name: Terraform destroy
+        continue-on-error: true
+        run:  |
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
+            cd "tests/${{ matrix.package }}"
             terraform destroy -auto-approve
           fi
+      - name: Terraform destroy in case of an error
+        run:  |
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
+            cd "tests/${{ matrix.package }}"
+            terraform destroy -auto-approve
+          fi
+
 
         
