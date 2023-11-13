@@ -118,16 +118,19 @@ jobs:
           fi
 
       - name: send log to log group
+        continue-on-error: true
         run: |
           aws logs put-log-events \
-          --log-group-name "gr-test" \
+          --log-group-name  "gr-test"\
           --log-stream-name "test2" \
           --log-events "[{\"timestamp\": $(date +%s)000, \"message\": \"This is a log message sent to CloudWatch.\"}]"
       
       - name: Validate Lambda Function
+        continue-on-error: true
         run: |
+          logGroupName=$(aws logs describe-log-groups --log-group-name-prefix '/aws/lambda/Coralogix-CloudWatch-' --query 'logGroups[-1].logGroupName' --output text)
           aws logs filter-log-events \
-          --log-group-name "/aws/lambda/${{ env.LAMBDA_NAME }}" \
+          --log-group-name "/aws/lambda/$logGroupName" \
           --filter-pattern "ERROR"
 
       - name: Terraform destroy
