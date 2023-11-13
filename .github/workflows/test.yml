@@ -125,11 +125,12 @@ jobs:
       
       - name: Add Sleep Before Step
         run: sleep 20s
-        
+
       - name: Validate Lambda Function
         continue-on-error: true
         run: |
           logGroupName=$(aws logs describe-log-groups --log-group-name-prefix '/aws/lambda/Coralogix-CloudWatch-' --query 'logGroups[-1].logGroupName' --output text)
+          echo $logGroupName
           aws logs filter-log-events \
           --log-group-name $logGroupName \
           --filter-pattern "ERROR"
