@@ -125,7 +125,7 @@ jobs:
         run: |
           logGroupName=$(aws logs describe-log-groups --log-group-name-prefix '/aws/lambda/Coralogix-CloudWatch-' --query 'logGroups[-1].logGroupName' --output text)
           aws logs filter-log-events \
-          --log-group-name "/aws/lambda/$logGroupName" \
+          --log-group-name $logGroupName \
           --filter-pattern "ERROR"
 
       # - name: Terraform destroy
