@@ -135,6 +135,9 @@ jobs:
           --log-group-name $logGroupName \
           --filter-pattern "ERROR"
 
+      - name: Add Sleep Before Step
+        run: sleep 100s
+
       - name: Terraform destroy
         continue-on-error: true
         run:  |
