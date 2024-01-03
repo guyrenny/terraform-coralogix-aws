@@ -64,14 +64,20 @@ jobs:
             fi
           fi
         
-      - name: Configure AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TESTING_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TESTING_SECRET_ACCESS_KEY }}
-        run: |
-          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
-          
+      # - name: Configure AWS credentials
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.TESTING_ACCESS_KEY }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.TESTING_SECRET_ACCESS_KEY }}
+      #   run: |
+      #     echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> $GITHUB_ENV
+      #     echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.TESTING_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.TESTING_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 
       - name: Terraform init
         run: |
           if [[ ${{ matrix.package }} != "locals_variables" ]];then
@@ -92,12 +98,59 @@ jobs:
             cd "tests/${{ matrix.package }}"
             terraform plan
           fi
+
       - name: Terraform apply
+        continue-on-error: true
+        run:  |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            cd "tests/${{ matrix.package }}"
+            terraform apply -auto-approve
+          fi
+      - name: Terraform apply
+        run: |
+          if [[ ${{ matrix.package }} != "locals_variables" ]]; then
+            cd "tests/${{ matrix.package }}"
+            terraform apply -auto-approve
+          fi
+
+      - name: Add Sleep Before Step
+        run: sleep 20s
+
+      - name: send log to log group
+        continue-on-error: true
+        run: |
+          aws logs put-log-events \
+          --log-group-name  "gr-test" --log-stream-name "test2" \
+          --log-events "[{\"timestamp\": $(date +%s)000, \"message\": \"This is a log message sent to CloudWatch.\"}]"
+      
+      - name: Add Sleep Before Step
+        run: sleep 20s
+
+      - name: Validate Lambda Function
+        continue-on-error: true
+        run: |
+          logGroupName=$(aws logs describe-log-groups --log-group-name-prefix '/aws/lambda/Coralogix-CloudWatch-' --query 'logGroups[-1].logGroupName' --output text)
+          echo $logGroupName
+          aws logs filter-log-events \
+          --log-group-name $logGroupName \
+          --filter-pattern "ERROR"
+
+      - name: Add Sleep Before Step
+        run: sleep 100s
+
+      - name: Terraform destroy
+        continue-on-error: true
         run:  |
           if [[ ${{ matrix.package }} != "locals_variables" ]];then
             cd "tests/${{ matrix.package }}"
-            terraform apply -auto-approve
             terraform destroy -auto-approve
           fi
+      - name: Terraform destroy in case of an error
+        run:  |
+          if [[ ${{ matrix.package }} != "locals_variables" ]];then
+            cd "tests/${{ matrix.package }}"
+            terraform destroy -auto-approve
+          fi
+
 
         

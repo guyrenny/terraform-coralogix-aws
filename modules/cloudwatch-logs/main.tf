@@ -12,6 +12,7 @@ data "aws_cloudwatch_log_group" "this" {
   name  = element(var.log_groups, count.index)
 }
 
+
 resource "random_string" "this" {
   length  = 12
   special = false

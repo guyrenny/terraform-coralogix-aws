@@ -18,5 +18,5 @@ module "cloudwatch" {
   private_key      = "{{ secrets.TESTING_PRIVATE_KEY }}"
   application_name = "cloudwatch-logs"
   subsystem_name   = "logs"
-  log_groups       = ["github-action-testing-log-stream"]
+  log_groups       = ["gr-test"]
 }
