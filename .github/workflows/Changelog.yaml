@@ -32,7 +32,15 @@ jobs:
       uses: tj-actions/changed-files@v40
       with:
         safe_output: true
-
+        
+    - name: List all added files
+      env:
+        ADDED_FILES: ${{ steps.changed-files.outputs.added_files }}
+      run: |
+        for file in "$ADDED_FILES"; do
+          echo "$file was added"
+        done
+        
     - name: check changelog 
       run: |
         changed_files_string="${{ steps.changed-files.outputs.all_changed_files }}"
@@ -43,3 +51,4 @@ jobs:
             ./changelog_check.sh $(dirname $changed_file)
           fi
         done
+  
