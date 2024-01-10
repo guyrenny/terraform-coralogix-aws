@@ -22,6 +22,7 @@ jobs:
         with:
           fetch-depth: 0 
       - uses: actions/checkout@v3
+        if: "${{ inputs.refToBuild != null }}"
         with:
           ref: ${{ inputs.refToBuild }}
       - name: change branch
