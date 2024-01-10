@@ -1,0 +1,69 @@
+name: validate version
+
+on: 
+  pull_request:
+    types: [opened, synchronize]
+    branches: [master,main]
+    paths:
+      - "modules/**/variables.tf"
+
+jobs:
+  upload_files:
+    runs-on: ubuntu-latest
+    name: upload files
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+      - name: change branch
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git pull origin master
+          echo pull
+          git fetch origin
+          echo fetch
+          branch_name=${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+          echo "branch_name=$branch_name" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.DESTINATION_REPO }}
+
+      - uses: LouisBrunner/diff-action@v0.3.0
+        with:
+          old: file1.txt
+          new: file2.txt
+          mode: addition
+          tolerance: better
+          output: out.txt
+      - name: Identify changed modules
+        id: identify_changed_modules
+        run: |
+          changed_modules=()
+          while IFS= read -r path; do
+            module_name=$(echo "$path" | awk -F'/' '{print $(NF-1)}')
+            changed_modules+=("$module_name")
+          done <<< "$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^modules/.*variables.tf$')"
+          echo "::set-output name=changed_modules::${changed_modules[@]}"
+  
+      - name: Update Variables
+        run: |
+          for module_name in ${{ steps.identify_changed_modules.outputs.changed_modules }}; do
+            cp "modules/${module_name}/variables.tf" "examples/${module_name}/variables.tf"
+            git add "examples/${module_name}/variables.tf"
+          done
+          
+      - name: align example variables file to the one under modules
+        run: |
+          cp modules/$module_name/variables.tf examples/$module_name/variables.tf
+
+
+      - name: update the variables
+        uses: planetscale/ghcommit-action@v0.1.19
+        with:
+          commit_message: "align versiables.tf file with the variable file that is under exmaples"
+          repo: coralogix/coralogix-aws-shipper
+          branch: ${{env.branch_name}}
+          file_pattern: '*.tf'
+        env:
+          GITHUB_TOKEN: ${{secrets.DESTINATION_REPO}}
