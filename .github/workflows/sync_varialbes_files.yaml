@@ -2,6 +2,11 @@ name: validate version
 
 on: 
   workflow_dispatch:
+    inputs:
+      refToBuild:
+        description: 'Branch, tag or commit SHA1 to build'
+        required: true
+        type: string
   pull_request:
     types: [opened, synchronize]
     branches: [master,main]
