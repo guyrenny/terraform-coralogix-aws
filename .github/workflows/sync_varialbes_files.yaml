@@ -1,6 +1,12 @@
 name: validate version
 
 on: 
+  workflow_dispatch:
+    inputs:
+      refToBuild:
+        description: 'Branch, tag or commit SHA1 to build'
+        required: true
+        type: string
   pull_request:
     types: [opened, synchronize]
     branches: [master,main]
@@ -15,6 +21,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 
+      - uses: actions/checkout@v3
+        if: "${{ inputs.refToBuild != null }}"
+        with:
+          ref: ${{ inputs.refToBuild }}
       - name: change branch
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
