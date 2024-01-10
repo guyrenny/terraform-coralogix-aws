@@ -41,13 +41,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.DESTINATION_REPO }}
 
-      - uses: LouisBrunner/diff-action@v0.3.0
-        with:
-          old: file1.txt
-          new: file2.txt
-          mode: addition
-          tolerance: better
-          output: out.txt
+      # - uses: LouisBrunner/diff-action@v0.3.0
+      #   with:
+      #     old: file1.txt
+      #     new: file2.txt
+      #     mode: addition
+      #     tolerance: better
+      #     output: out.txt
       - name: Identify changed modules
         id: identify_changed_modules
         run: |
