@@ -1,4 +1,4 @@
-
+asd
 new var
 variable "coralogix_region" {
   description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US, US2, Custom]"
