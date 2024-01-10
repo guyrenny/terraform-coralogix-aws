@@ -1,6 +1,7 @@
 name: validate version
 
 on: 
+  workflow_dispatch:
   pull_request:
     types: [opened, synchronize]
     branches: [master,main]
