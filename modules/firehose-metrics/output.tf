@@ -12,7 +12,6 @@ output "s3_backup_bucket_arn" {
   value       = local.s3_backup_bucket_arn
   description = "value of the S3 backup bucket ARN used"
 }
-
 output "lambda_processor_arn" {
   value       = one(aws_lambda_function.lambda_processor[*].arn)
   description = "value of the firehose lambda processor ARN used"
