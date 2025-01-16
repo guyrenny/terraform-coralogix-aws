@@ -38,6 +38,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.10.0"
+          
       - name: Check for missing test directories
         run: |
           chmod +x tests/compare_directories_test.sh
